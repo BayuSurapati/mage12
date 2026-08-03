@@ -14,9 +14,14 @@ public class CardSwipe : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
     [Tooltip("Masukkan objek CardNarrative Teks kesini")]
     public TextMeshProUGUI narrativeTextUI;
 
+    [Header("Referensi Modul Lain")]
+    public GameManager gameManager;
+
     [Header("Pengaturan Geser")]
     public float swipeThreshold = 150f; // Jarak untuk mengeksekusi pilihan (Setuju/Tolak)
     public float telegraphThreshold = 50f; // Jarak untuk memunculkan Sinyal UI (Mengintip)
+    [Tooltip("Kecepatan kartu terlempar keluar setelah dilepas")]
+    public float throwSpeed = 2500f;
 
     [Header("Pengaturan Visual Sinyal (Ukuran)")]
     [Tooltip("Skala ukuran titik paling kecil (untuk efek mendekati 0)")]
@@ -35,6 +40,8 @@ public class CardSwipe : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
     private Vector2 defaultPosition;
     private RectTransform rectTransform;
 
+    private bool isAnimating = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -52,7 +59,7 @@ public class CardSwipe : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-
+        if (isAnimating) return;
     }
 
     public void UpdateCardDisplay()
@@ -65,6 +72,8 @@ public class CardSwipe : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (isAnimating) return;
+
         rectTransform.anchoredPosition += eventData.delta;
 
         float rotationAngle = rectTransform.anchoredPosition.x * -0.05f;
@@ -77,20 +86,63 @@ public class CardSwipe : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (isAnimating) return;
+
         float dragDistanceX = rectTransform.anchoredPosition.x - defaultPosition.x;
+        bool hasMadeChoice = false;
 
         if(dragDistanceX > swipeThreshold)
         {
             Debug.Log("Swipe Kanan Valid: Pilihan Setuju!");
+            StartCoroutine(ThrowCardOffScreen(true));
+            hasMadeChoice = true;
         }
         else if (dragDistanceX < -swipeThreshold)
         {
             Debug.Log("Swipe Kiri Valid: Pilihan Tolak!");
+            StartCoroutine(ThrowCardOffScreen(false));
+            hasMadeChoice = true;
         }
         else
         {
             ResetCardPosition();
         }
+
+        if(hasMadeChoice && gameManager != null)
+        {
+            gameManager.AdvanceMonth();
+        }
+    }
+
+    private IEnumerator ThrowCardOffScreen(bool toRight)
+    {
+        isAnimating = true;
+        HideAllSignals();
+
+        // 1. Tentukan titik target di luar layar
+        // Jika toRight = true, targetnya jauh di sebelah kanan layar. Jika false, sebelah kiri.
+        float targetOffScreenX = toRight ? Screen.width + 1000f : -Screen.width -1000f;
+        Vector2 targetPosition = new Vector2(targetOffScreenX, rectTransform.anchoredPosition.y);
+
+        // 2. Lakukan pergerakan bertahap (frame by frame)
+        // Kartu akan terus bergerak sampai jaraknya ke target sudah sangat dekat
+        while (Vector2.Distance(rectTransform.anchoredPosition, targetPosition) > 10f)
+        {
+            rectTransform.anchoredPosition = Vector2.MoveTowards(rectTransform.anchoredPosition, targetPosition, throwSpeed * Time.deltaTime);
+            yield return null;
+        }
+
+        // 3. Setelah kartu benar-benar hilang dari layar:
+        if (gameManager != null)
+        {
+            gameManager.AdvanceMonth();
+        }
+
+        // 4. Kembalikan posisi fisik kartu ke tengah secara instan (diam-diam)
+        rectTransform.anchoredPosition = defaultPosition;
+        rectTransform.rotation = Quaternion.identity;
+
+        isAnimating = false;
     }
 
     private void UpdateTelegraphing(float dragDistanceX)

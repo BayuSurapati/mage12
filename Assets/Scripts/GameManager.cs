@@ -21,7 +21,8 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        DrawCard();
+        GenerateSessionDeck();
     }
 
     // Update is called once per frame
@@ -32,17 +33,69 @@ public class GameManager : MonoBehaviour
 
     private void GenerateSessionDeck()
     {
+        currentSessionDeck.Clear();
+        currentMonth = 1;
 
+        //Wadah sementara
+        List<CardData> tempNormalCards = new List<CardData>(allNormalCards);
+        List<CardData> tempMiniGameCards = new List<CardData>(allMiniGameCards);
+
+        //Shuffle the lists
+        ShuffleList(tempNormalCards);
+        ShuffleList(tempMiniGameCards);
+
+        //Add 20 normal cards and 10 mini games
+        int totalNormalNeed = 20;
+        int totalMiniGameNeed = 10;
+
+        List<CardData> selectedDeck = new List<CardData>();
+
+        for (int i = 0; i < totalNormalNeed && i < tempNormalCards.Count; i++)
+        {
+            selectedDeck.Add(tempNormalCards[i]);
+        }
+        for (int i = 0; i < totalMiniGameNeed && i < tempMiniGameCards.Count; i++)
+        {
+            selectedDeck.Add(tempMiniGameCards[i]);
+        }
+
+        //Shuffle 30 cards
+        ShuffleList(selectedDeck);
+
+        //Masukkan dalam deck permainan
+        currentSessionDeck = selectedDeck;
+
+        Debug.Log($"Sesi Baru Dimulai! Total Kartu di Deck: {currentSessionDeck.Count}");
     }
 
     public void DrawCard()
     {
+        if(currentMonth > MAX_MONTHS)
+        {
+            Debug.Log("Permainan Selesai! Pemain Bertahan 30 Bulan!");
+            // TODO: Panggil fungsi Game Over (Win Condition)
+            return;
+        }
 
+        if(currentSessionDeck.Count > 0)
+        {
+            CardData nextCard = currentSessionDeck[0];
+            currentSessionDeck.RemoveAt(0);
+            cardSwipeScript.activeCard = nextCard;
+            cardSwipeScript.UpdateCardDisplay();
+
+            Debug.Log($"Bulan ke-{currentMonth}: Memainkan Kartu {nextCard.cardID}");
+        }
+        else
+        {
+            Debug.LogError("Kehabisan Kartu di Deck!");
+        }
     }
 
     public void AdvanceMonth()
     {
-
+        currentMonth++;
+        DrawCard();
     }
 
     private void ShuffleList<T>(List<T> list)

@@ -487,8 +487,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activeCard: {fileID: 11400000, guid: b523b3dc75fe2fe46895ba369dd60dc1, type: 2}
   narrativeTextUI: {fileID: 1381469038}
+  gameManager: {fileID: 1553699937}
   swipeThreshold: 150
   telegraphThreshold: 50
+  throwSpeed: 6000
   minDotScale: 0.5
   maxDotScale: 1.8
   maxEffectValue: 15
@@ -606,8 +608,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 340}
-  m_SizeDelta: {x: 506, y: 50}
+  m_AnchoredPosition: {x: 0, y: 293.705}
+  m_SizeDelta: {x: 506, y: 142.591}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1381469038
 MonoBehaviour:
@@ -656,8 +658,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 48
+  m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -866,6 +868,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1553699936}
+  - component: {fileID: 1553699937}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -888,6 +891,53 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1553699937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1553699935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c8bd22b9dc28a74c848b3bbb0a9b877, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allNormalCards:
+  - {fileID: 11400000, guid: b523b3dc75fe2fe46895ba369dd60dc1, type: 2}
+  - {fileID: 11400000, guid: 5f340de3fd8e996478dd3994306f1715, type: 2}
+  - {fileID: 11400000, guid: 5c14e7cbb8b12a24daf327d15c9d8fff, type: 2}
+  - {fileID: 11400000, guid: aa4489f7cd5dd7a4da3a48970fcd7f57, type: 2}
+  - {fileID: 11400000, guid: 0f3df05e0e7d15341b21c805eae42be8, type: 2}
+  - {fileID: 11400000, guid: 23ec86aa5d6a3b946817c6e374486bf4, type: 2}
+  - {fileID: 11400000, guid: 196a9efb9c9079e428dd6ab1ae4969b1, type: 2}
+  - {fileID: 11400000, guid: 5d87dbc7af5e7e944955d4c3f6070b5f, type: 2}
+  - {fileID: 11400000, guid: 6f7117be3a6137f40b24b12fb7ef1697, type: 2}
+  - {fileID: 11400000, guid: 1a001b8829b03cc47ba14d923d1f7cbb, type: 2}
+  - {fileID: 11400000, guid: 1a001b8829b03cc47ba14d923d1f7cbb, type: 2}
+  - {fileID: 11400000, guid: 1a001b8829b03cc47ba14d923d1f7cbb, type: 2}
+  - {fileID: 11400000, guid: 1a001b8829b03cc47ba14d923d1f7cbb, type: 2}
+  - {fileID: 11400000, guid: 1a001b8829b03cc47ba14d923d1f7cbb, type: 2}
+  - {fileID: 11400000, guid: 1a001b8829b03cc47ba14d923d1f7cbb, type: 2}
+  - {fileID: 11400000, guid: 1a001b8829b03cc47ba14d923d1f7cbb, type: 2}
+  - {fileID: 11400000, guid: 1a001b8829b03cc47ba14d923d1f7cbb, type: 2}
+  - {fileID: 11400000, guid: 1a001b8829b03cc47ba14d923d1f7cbb, type: 2}
+  - {fileID: 11400000, guid: 1a001b8829b03cc47ba14d923d1f7cbb, type: 2}
+  - {fileID: 11400000, guid: 1a001b8829b03cc47ba14d923d1f7cbb, type: 2}
+  allMiniGameCards:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  currentSessionDeck: []
+  currentMonth: 1
+  cardSwipeScript: {fileID: 692732287}
 --- !u!1 &1554763126
 GameObject:
   m_ObjectHideFlags: 0

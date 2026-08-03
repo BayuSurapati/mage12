@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0436a7fe4b5e03646afbd2533019d9fa, type: 3}
-  m_Name: KartuTes
+  m_Name: KartuTes 8
   m_EditorClassIdentifier: 
   cardID: 01
-  narasiCerita: Kontol Anjink Mememk
+  narasiCerita: Mawar Melati Blyat
   isMiniGameCard: 0
   efekKiriBencana: -10
   efekKiriEkosistem: 0
