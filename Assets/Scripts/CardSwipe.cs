@@ -89,28 +89,21 @@ public class CardSwipe : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
         if (isAnimating) return;
 
         float dragDistanceX = rectTransform.anchoredPosition.x - defaultPosition.x;
-        bool hasMadeChoice = false;
+        //bool hasMadeChoice = false;
 
         if(dragDistanceX > swipeThreshold)
         {
             Debug.Log("Swipe Kanan Valid: Pilihan Setuju!");
             StartCoroutine(ThrowCardOffScreen(true));
-            hasMadeChoice = true;
         }
         else if (dragDistanceX < -swipeThreshold)
         {
             Debug.Log("Swipe Kiri Valid: Pilihan Tolak!");
             StartCoroutine(ThrowCardOffScreen(false));
-            hasMadeChoice = true;
         }
         else
         {
             ResetCardPosition();
-        }
-
-        if(hasMadeChoice && gameManager != null)
-        {
-            gameManager.AdvanceMonth();
         }
     }
 
@@ -135,7 +128,7 @@ public class CardSwipe : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
         // 3. Setelah kartu benar-benar hilang dari layar:
         if (gameManager != null)
         {
-            gameManager.AdvanceMonth();
+            gameManager.ProcessDecision(toRight, activeCard);
         }
 
         // 4. Kembalikan posisi fisik kartu ke tengah secara instan (diam-diam)

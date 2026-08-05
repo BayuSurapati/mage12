@@ -17,10 +17,16 @@ public class GameManager : MonoBehaviour
 
     [Header("Referensi Modul Lain")]
     public CardSwipe cardSwipeScript;
+    public StatsManager statsManager;
 
     // Start is called before the first frame update
     void Start()
     {
+        if(statsManager != null)
+        {
+            statsManager.ResetStats();
+        }
+
         DrawCard();
         GenerateSessionDeck();
     }
@@ -66,6 +72,26 @@ public class GameManager : MonoBehaviour
         currentSessionDeck = selectedDeck;
 
         Debug.Log($"Sesi Baru Dimulai! Total Kartu di Deck: {currentSessionDeck.Count}");
+    }
+
+    public void ProcessDecision(bool isRightChoice, CardData playedCard)
+    {
+        if (statsManager == null)
+        {
+            return;
+        }
+
+        //Minta statsmanager untuk menghitung efeknya
+        statsManager.ApplyCardEffects(isRightChoice, playedCard);
+
+        //Tanya stats manager soal kondisi game over
+        if (statsManager.isGameOver())
+        {
+            Debug.Log("Permainan Selesai! Pemain Kalah!");
+            return;
+        }
+
+        AdvanceMonth();
     }
 
     public void DrawCard()
