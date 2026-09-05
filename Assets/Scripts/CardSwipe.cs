@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Unity.Properties;
 
 public class CardSwipe : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
@@ -37,18 +38,22 @@ public class CardSwipe : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
     public GameObject sinyalKeuangan;
     public GameObject sinyalTeknologi;
 
+    [Header("Referensi UI Teks Pilihan")]
+    public TextMeshProUGUI teksPilihanKiri;
+    public TextMeshProUGUI teksPilihanKanan;
+
     private Vector2 defaultPosition;
     private RectTransform rectTransform;
 
     private bool isAnimating = false;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
         defaultPosition = rectTransform.anchoredPosition;
         HideAllSignals();
-        UpdateCardDisplay();
+        //UpdateCardDisplay();
     }
 
     // Update is called once per frame
@@ -64,9 +69,41 @@ public class CardSwipe : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
 
     public void UpdateCardDisplay()
     {
+        Debug.Log($"teksPilihanKiri: {teksPilihanKiri}");  // Akan keluar "None" jika null
+        Debug.Log($"teksPilihanKanan: {teksPilihanKanan}");  // Akan keluar "None" jika null
+
         if (activeCard != null && narrativeTextUI != null)
         {
             narrativeTextUI.text = activeCard.narasiCerita;
+
+            if (teksPilihanKiri != null)
+            {
+                teksPilihanKiri.text = activeCard.teksGeserKiri;
+                Debug.Log($"teksPilihanKiri text: {teksPilihanKiri.text}");
+                Debug.Log($"teksPilihanKiri enabled: {teksPilihanKiri.enabled}");
+                Debug.Log($"teksPilihanKiri gameObject active: {teksPilihanKiri.gameObject.activeInHierarchy}");
+                SetTextAlpha(teksPilihanKiri, 1f);
+            }
+            else
+            {
+                Debug.LogError("teksPilihanKiri adalah NULL!");
+            }
+
+            if (teksPilihanKanan != null)
+            {
+                teksPilihanKanan.text = activeCard.teksGeserKanan;
+                Debug.Log($"teksPilihanKanan text: {teksPilihanKanan.text}");
+                Debug.Log($"teksPilihanKanan enabled: {teksPilihanKanan.enabled}");
+                Debug.Log($"teksPilihanKanan gameObject active: {teksPilihanKanan.gameObject.activeInHierarchy}");
+                SetTextAlpha(teksPilihanKanan, 1f);
+            }
+            else
+            {
+                Debug.LogError("teksPilihanKanan adalah NULL!");
+            }
+            
+            SetTextAlpha(teksPilihanKiri, 0f);
+            SetTextAlpha(teksPilihanKanan, 0f);
         }
     }
 
@@ -80,8 +117,30 @@ public class CardSwipe : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
         rectTransform.rotation = Quaternion.Euler(0,0, rotationAngle);
 
         float dragDistanceX = rectTransform.anchoredPosition.x - defaultPosition.x;
-
+        Debug.Log($"dragDistanceX: {dragDistanceX}"); // Debug
         UpdateTelegraphing(dragDistanceX);
+
+        //Jika jarak geser lebih dari 10 pixel, baru mulai menampilkan teks pilihan
+        float fadeRatio = Mathf.Clamp01(Mathf.Abs(dragDistanceX) / swipeThreshold);
+        Debug.Log($"fadeRatio: {fadeRatio}"); // Debug
+
+        if (dragDistanceX > 10f) // Tarik ke Kanan
+        {
+            Debug.Log($"Setting right text alpha to: {fadeRatio}"); // Debug
+            SetTextAlpha(teksPilihanKanan, fadeRatio);
+            SetTextAlpha(teksPilihanKiri, 0f);
+        }
+        else if (dragDistanceX < -10f) // Tarik ke Kiri
+        {
+            Debug.Log($"Setting left text alpha to: {fadeRatio}"); // Debug
+            SetTextAlpha(teksPilihanKiri, fadeRatio);
+            SetTextAlpha(teksPilihanKanan, 0f);
+        }
+        else // Di area netral tengah
+        {
+            SetTextAlpha(teksPilihanKiri, 0f);
+            SetTextAlpha(teksPilihanKanan, 0f);
+        }
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -132,10 +191,10 @@ public class CardSwipe : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
         }
 
         // 4. Kembalikan posisi fisik kartu ke tengah secara instan (diam-diam)
-        rectTransform.anchoredPosition = defaultPosition;
-        rectTransform.rotation = Quaternion.identity;
+        //rectTransform.anchoredPosition = defaultPosition;
+        //rectTransform.rotation = Quaternion.identity;
 
-        isAnimating = false;
+        //isAnimating = false;
     }
 
     private void UpdateTelegraphing(float dragDistanceX)
@@ -185,11 +244,25 @@ public class CardSwipe : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
         signal.GetComponent<RectTransform>().localScale = new Vector3(calculatedScale, calculatedScale, 1f);
     }
 
-    private void ResetCardPosition()
+    private void SetTextAlpha(TextMeshProUGUI textUI, float alpha)
+    {
+        if(textUI != null)
+        {
+            Color c = textUI.color;
+            c.a = alpha;
+            textUI.color = c;
+        }
+    }
+
+    public void ResetCardPosition()
     {
         rectTransform.anchoredPosition = defaultPosition;
         rectTransform.rotation = Quaternion.identity;
+        isAnimating = false;
         HideAllSignals();
+
+        SetTextAlpha(teksPilihanKiri, 0f);
+        SetTextAlpha(teksPilihanKanan, 0f);
     }
 
     private void ShowSignals(GameObject[] signalsToActivate)

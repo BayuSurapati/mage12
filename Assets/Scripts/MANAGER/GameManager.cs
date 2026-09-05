@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     [Header("Referensi Modul Lain")]
     public CardSwipe cardSwipeScript;
     public StatsManager statsManager;
+    public MiniGameManager miniGameManager;
 
     // Start is called before the first frame update
     void Start()
@@ -26,9 +27,8 @@ public class GameManager : MonoBehaviour
         {
             statsManager.ResetStats();
         }
-
-        DrawCard();
         GenerateSessionDeck();
+        DrawCard();
     }
 
     // Update is called once per frame
@@ -50,27 +50,30 @@ public class GameManager : MonoBehaviour
         ShuffleList(tempNormalCards);
         ShuffleList(tempMiniGameCards);
 
-        //Add 20 normal cards and 10 mini games
-        int totalNormalNeed = 20;
-        int totalMiniGameNeed = 10;
-
         List<CardData> selectedDeck = new List<CardData>();
 
-        for (int i = 0; i < totalNormalNeed && i < tempNormalCards.Count; i++)
+        for (int i = 0; i < 25 && i < tempNormalCards.Count; i++)
         {
             selectedDeck.Add(tempNormalCards[i]);
         }
-        for (int i = 0; i < totalMiniGameNeed && i < tempMiniGameCards.Count; i++)
-        {
-            selectedDeck.Add(tempMiniGameCards[i]);
-        }
 
-        //Shuffle 30 cards
-        ShuffleList(selectedDeck);
+        int[] miniGameIntervals = { 3, 8, 15, 23, 28 };
+
+        for (int i = 0; i < 5 && i < tempMiniGameCards.Count; i++)
+        {
+            int insertIndex = miniGameIntervals[i];
+            if (insertIndex < selectedDeck.Count)
+            {
+                selectedDeck.Insert(insertIndex, tempMiniGameCards[i]);
+            }
+            else
+            {
+                selectedDeck.Add(tempMiniGameCards[i]);
+            }
+        }
 
         //Masukkan dalam deck permainan
         currentSessionDeck = selectedDeck;
-
         Debug.Log($"Sesi Baru Dimulai! Total Kartu di Deck: {currentSessionDeck.Count}");
     }
 
@@ -78,6 +81,20 @@ public class GameManager : MonoBehaviour
     {
         if (statsManager == null)
         {
+            return;
+        }
+
+        //  CEKATAN KARTU PAKSAAN (MINI-GAME) 
+        if (playedCard.isMiniGameCard)
+        {
+            // Jangan hitung efek stat biasa, langsung lempar ke Mini-Game
+            if (miniGameManager != null)
+            {
+                miniGameManager.TriggerMiniGame(playedCard);
+            }
+
+            // Hentikan fungsi di sini! Pergantian bulan (AdvanceMonth) akan 
+            // dieksekusi nanti oleh MiniGameResultUI setelah pemain selesai bermain.
             return;
         }
 
@@ -107,19 +124,24 @@ public class GameManager : MonoBehaviour
         {
             CardData nextCard = currentSessionDeck[0];
             currentSessionDeck.RemoveAt(0);
+            Debug.Log($"[CEK KARTU] Di tangan: {nextCard.cardID} | Di pucuk deck untuk bulan depan: {currentSessionDeck[0].cardID}");
+
+            cardSwipeScript.gameObject.SetActive(true);
             cardSwipeScript.activeCard = nextCard;
             cardSwipeScript.UpdateCardDisplay();
-
+            cardSwipeScript.ResetCardPosition();
             Debug.Log($"Bulan ke-{currentMonth}: Memainkan Kartu {nextCard.cardID}");
-        }
-        else
-        {
-            Debug.LogError("Kehabisan Kartu di Deck!");
         }
     }
 
     public void AdvanceMonth()
     {
+        StartCoroutine(AdvanceMonthRoutine());
+    }
+
+    private IEnumerator AdvanceMonthRoutine()
+    {
+        yield return new WaitForSeconds(.5f); // Tunggu 1 detik sebelum melanjutkan
         currentMonth++;
         DrawCard();
     }

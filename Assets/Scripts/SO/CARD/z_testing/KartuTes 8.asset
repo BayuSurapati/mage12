@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0436a7fe4b5e03646afbd2533019d9fa, type: 3}
   m_Name: KartuTes 8
   m_EditorClassIdentifier: 
-  cardID: 01
+  cardID: MG-02
   narasiCerita: Mawar Melati Blyat
-  isMiniGameCard: 0
+  isMiniGameCard: 1
   efekKiriBencana: -10
   efekKiriEkosistem: 0
   efekKiriKeuangan: 0
@@ -23,3 +23,15 @@ MonoBehaviour:
   efekKananEkosistem: 5
   efekKananKeuangan: 0
   efekKananTeknologi: 0
+  efekWinBencana: 25
+  efekWinEkosistem: 0
+  efekWinKeuangan: 0
+  efekWinTeknologi: 0
+  efekLoseBencana: 0
+  efekLoseEkosistem: 0
+  efekLoseKeuangan: 0
+  efekLoseTeknologi: -25
+  teksGeserKiri: asdasd
+  teksGeserKanan: asdsa
+  introMiniGame: Mitigasi Bencana
+  deskripsiMiniGame: asdadaads

@@ -23,3 +23,15 @@ MonoBehaviour:
   efekKananEkosistem: 5
   efekKananKeuangan: 0
   efekKananTeknologi: 0
+  efekWinBencana: 0
+  efekWinEkosistem: 0
+  efekWinKeuangan: 0
+  efekWinTeknologi: 0
+  efekLoseBencana: 0
+  efekLoseEkosistem: 0
+  efekLoseKeuangan: 0
+  efekLoseTeknologi: 0
+  teksGeserKiri: dsadas
+  teksGeserKanan: asd
+  introMiniGame: 
+  deskripsiMiniGame: 

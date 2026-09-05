@@ -64,6 +64,22 @@ public class StatsManager : MonoBehaviour
         Debug.Log($"[StatsManager] Status Baru -> Bencana: {statBencana} | Eko: {statEkosistem} | Uang: {statKeuangan} | Tech: {statTeknologi}");
     }
 
+    public void ApplyMiniGameEffects(int efekBencana, int efekEkosistem, int efekKeuangan, int efekTeknologi)
+    {
+        statBencana += efekBencana;
+        statEkosistem += efekEkosistem;
+        statKeuangan += efekKeuangan;
+        statTeknologi += efekTeknologi;
+
+        ClampStats();
+
+        if (uiManager != null)
+        {
+            uiManager.UpdateProgressBars();
+        }
+        Debug.Log($"[StatsManager] Status Baru (Mini-Game) -> Bencana: {statBencana} | Eko: {statEkosistem} | Uang: {statKeuangan} | Tech: {statTeknologi}");
+    }
+
     private void ClampStats()
     {
         statBencana = Mathf.Clamp(statBencana, 0, 100);
