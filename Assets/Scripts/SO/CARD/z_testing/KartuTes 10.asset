@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0436a7fe4b5e03646afbd2533019d9fa, type: 3}
-  m_Name: KartuTes 6
+  m_Name: KartuTes 10
   m_EditorClassIdentifier: 
-  cardID: MG-05
-  narasiCerita: Mawar Melati Ungu
+  cardID: MG-04
+  narasiCerita: Mawar Melati Kontol
   isMiniGameCard: 1
   efekKiriBencana: -10
   efekKiriEkosistem: 0
@@ -23,15 +23,15 @@ MonoBehaviour:
   efekKananEkosistem: 5
   efekKananKeuangan: 0
   efekKananTeknologi: 0
-  efekWinBencana: 0
+  efekWinBencana: 20
   efekWinEkosistem: 0
   efekWinKeuangan: 0
-  efekWinTeknologi: 0
-  efekLoseBencana: 0
+  efekWinTeknologi: 20
+  efekLoseBencana: -35
   efekLoseEkosistem: 0
   efekLoseKeuangan: 0
   efekLoseTeknologi: 0
   teksGeserKiri: Mainkan...
   teksGeserKanan: Mainkan...
-  introMiniGame: Puzzle Math
-  deskripsiMiniGame: wadawd
+  introMiniGame: Demo Massal
+  deskripsiMiniGame: Demo Massal

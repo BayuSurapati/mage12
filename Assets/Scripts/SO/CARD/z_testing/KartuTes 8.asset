@@ -31,7 +31,7 @@ MonoBehaviour:
   efekLoseEkosistem: 0
   efekLoseKeuangan: 0
   efekLoseTeknologi: -25
-  teksGeserKiri: asdasd
-  teksGeserKanan: asdsa
+  teksGeserKiri: Mainkan...
+  teksGeserKanan: Mainkan...
   introMiniGame: Mitigasi Bencana
   deskripsiMiniGame: asdadaads

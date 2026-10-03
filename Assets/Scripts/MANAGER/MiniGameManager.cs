@@ -15,7 +15,9 @@ public class MiniGameManager : MonoBehaviour
     // Masukkan referensi skrip mini-game spesifik di sini
     public MiniGame_CyberAttack cyberAttackGame;
     public MiniGame_MitigasiBencana mitigasiBencanaGame;
-    // public MiniGame_Banjir banjirGame; (untuk nanti)
+    public MiniGame_SortirSampah sampahGame;
+    public MiniGame_DemoMassal demoMassalGame;
+    public MiniGame_PuzzleMath puzzleMathGame;
     // public MiniGame_Karhutla karhutlaGame; (untuk nanti)
 
     private CardData currentMiniGameCard;
@@ -55,6 +57,33 @@ public class MiniGameManager : MonoBehaviour
                 mitigasiBencanaGame.StartMiniGame();
             }
         }
+
+        if (currentMiniGameCard.cardID == "MG-03") // Anggap MG-03 adalah ID untuk Sortir Sampah
+        {
+            if (sampahGame != null)
+            {
+                sampahGame.gameObject.SetActive(true); // Nyalakan panel spesifiknya
+                sampahGame.StartMiniGame();
+            }
+        }
+
+        if (currentMiniGameCard.cardID == "MG-04") // Anggap MG-04 adalah ID untuk Demo Massal
+        {
+            if (demoMassalGame != null)
+            {
+                demoMassalGame.gameObject.SetActive(true); // Nyalakan panel spesifiknya
+                demoMassalGame.StartMiniGame();
+            }
+        }
+
+        if (currentMiniGameCard.cardID == "MG-05") // Anggap MG-05 adalah ID untuk Puzzle Math
+        {
+            if (puzzleMathGame != null)
+            {
+                puzzleMathGame.gameObject.SetActive(true); // Nyalakan panel spesifiknya
+                puzzleMathGame.StartMiniGame();
+            }
+        }
         // else if (cardData.cardID == "MG-01") { jalankan mini-game banjir... }
     }
 
@@ -71,7 +100,22 @@ public class MiniGameManager : MonoBehaviour
             mitigasiBencanaGame.gameObject.SetActive(false);
         }
 
-        if(resultUI != null)
+        if (sampahGame != null &&   sampahGame.gameObject.activeSelf)
+        {
+            sampahGame.gameObject.SetActive(false);
+        }
+
+        if (demoMassalGame != null && demoMassalGame.gameObject.activeSelf)
+        {
+            demoMassalGame.gameObject.SetActive(false);
+        }
+
+        if (puzzleMathGame != null && puzzleMathGame.gameObject.activeSelf)
+        {
+            puzzleMathGame.gameObject.SetActive(false);
+        }
+
+        if (resultUI != null)
         {
             resultUI.ShowResult(isWin, currentMiniGameCard);
         }
