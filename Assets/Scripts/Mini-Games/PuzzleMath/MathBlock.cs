@@ -28,13 +28,15 @@ public class MathBlock : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         {
             canvasGroup = gameObject.AddComponent<CanvasGroup>();
         }
+
+        originalPosition = rectTransform.anchoredPosition; // Simpan posisi asli saat Awake
     }
 
     public void SetupBlock(int value)
     {
         blockValue = value;
         numberText.text = value.ToString();
-        originalPosition = rectTransform.anchoredPosition; // Simpan posisi asli saat setup
+        //originalPosition = rectTransform.anchoredPosition; // Simpan posisi asli saat setup
     }
 
     public void OnBeginDrag(PointerEventData eventData)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 using Unity.Properties;
 
 public class CardSwipe : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
@@ -41,6 +42,9 @@ public class CardSwipe : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
     [Header("Referensi UI Teks Pilihan")]
     public TextMeshProUGUI teksPilihanKiri;
     public TextMeshProUGUI teksPilihanKanan;
+
+    [Tooltip("Masukkan komponen UI Image karakter di sini")]
+    public Image imageKarakterUI;
 
     private Vector2 defaultPosition;
     private RectTransform rectTransform;
@@ -101,7 +105,12 @@ public class CardSwipe : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
             {
                 Debug.LogError("teksPilihanKanan adalah NULL!");
             }
-            
+
+            if (imageKarakterUI != null && activeCard.gambarKarakter != null)
+            {
+                imageKarakterUI.sprite = activeCard.gambarKarakter;
+            }
+
             SetTextAlpha(teksPilihanKiri, 0f);
             SetTextAlpha(teksPilihanKanan, 0f);
         }

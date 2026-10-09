@@ -7,6 +7,11 @@ public class CardData : ScriptableObject
 {
     [Header("Identitas Kartu")]
     public string cardID;
+    public string Subjek;
+    [Tooltip("Gambar karakter yang akan muncul di kartu")]
+    public Sprite gambarKarakter;
+
+
     [TextArea(3, 5)]
     public string narasiCerita;
 
