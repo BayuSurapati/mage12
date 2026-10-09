@@ -17,14 +17,14 @@ MonoBehaviour:
   gambarKarakter: {fileID: 0}
   narasiCerita: Anggaran penanggulangan bencana menipis. Alihkan dari sektor teknologi?
   isMiniGameCard: 0
-  efekKiriBencana: 0
+  efekKiriBencana: -10
   efekKiriEkosistem: 0
   efekKiriKeuangan: 0
-  efekKiriTeknologi: 0
-  efekKananBencana: 0
+  efekKiriTeknologi: 5
+  efekKananBencana: 10
   efekKananEkosistem: 0
   efekKananKeuangan: 0
-  efekKananTeknologi: 0
+  efekKananTeknologi: -10
   efekWinBencana: 0
   efekWinEkosistem: 0
   efekWinKeuangan: 0
@@ -33,7 +33,7 @@ MonoBehaviour:
   efekLoseEkosistem: 0
   efekLoseKeuangan: 0
   efekLoseTeknologi: 0
-  teksGeserKiri: 
-  teksGeserKanan: 
+  teksGeserKiri: Jangan Sentuh Teknologi
+  teksGeserKanan: Alihkan Dana
   introMiniGame: 
   deskripsiMiniGame: 

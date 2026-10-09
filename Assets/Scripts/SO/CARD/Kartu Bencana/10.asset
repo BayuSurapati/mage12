@@ -17,14 +17,14 @@ MonoBehaviour:
   gambarKarakter: {fileID: 0}
   narasiCerita: Kami diminta membangun rumah relokasi di lereng bukit. Yakin aman?
   isMiniGameCard: 0
-  efekKiriBencana: 0
+  efekKiriBencana: -15
   efekKiriEkosistem: 0
-  efekKiriKeuangan: 0
+  efekKiriKeuangan: 10
   efekKiriTeknologi: 0
-  efekKananBencana: 0
+  efekKananBencana: 10
   efekKananEkosistem: 0
-  efekKananKeuangan: 0
-  efekKananTeknologi: 0
+  efekKananKeuangan: -10
+  efekKananTeknologi: 5
   efekWinBencana: 0
   efekWinEkosistem: 0
   efekWinKeuangan: 0
@@ -33,7 +33,7 @@ MonoBehaviour:
   efekLoseEkosistem: 0
   efekLoseKeuangan: 0
   efekLoseTeknologi: 0
-  teksGeserKiri: 
-  teksGeserKanan: 
+  teksGeserKiri: Lanjutkan
+  teksGeserKanan: Kaji Ulang
   introMiniGame: 
   deskripsiMiniGame: 

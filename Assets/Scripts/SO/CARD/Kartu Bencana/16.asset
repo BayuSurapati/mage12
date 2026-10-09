@@ -17,13 +17,13 @@ MonoBehaviour:
   gambarKarakter: {fileID: 0}
   narasiCerita: Gunung api status Siaga. Siapkan camp pengungsian dari sekarang?
   isMiniGameCard: 0
-  efekKiriBencana: 0
+  efekKiriBencana: -15
   efekKiriEkosistem: 0
-  efekKiriKeuangan: 0
+  efekKiriKeuangan: 10
   efekKiriTeknologi: 0
-  efekKananBencana: 0
+  efekKananBencana: 15
   efekKananEkosistem: 0
-  efekKananKeuangan: 0
+  efekKananKeuangan: -10
   efekKananTeknologi: 0
   efekWinBencana: 0
   efekWinEkosistem: 0
@@ -33,7 +33,7 @@ MonoBehaviour:
   efekLoseEkosistem: 0
   efekLoseKeuangan: 0
   efekLoseTeknologi: 0
-  teksGeserKiri: 
-  teksGeserKanan: 
+  teksGeserKiri: Tunggu Awas
+  teksGeserKanan: Dirikan Tenda
   introMiniGame: 
   deskripsiMiniGame: 

@@ -17,13 +17,13 @@ MonoBehaviour:
   gambarKarakter: {fileID: 0}
   narasiCerita: Sampah menumpuk di laut membuat banjir rob makin kotor.
   isMiniGameCard: 0
-  efekKiriBencana: 0
-  efekKiriEkosistem: 0
+  efekKiriBencana: -10
+  efekKiriEkosistem: -10
   efekKiriKeuangan: 0
   efekKiriTeknologi: 0
-  efekKananBencana: 0
-  efekKananEkosistem: 0
-  efekKananKeuangan: 0
+  efekKananBencana: 10
+  efekKananEkosistem: 10
+  efekKananKeuangan: -10
   efekKananTeknologi: 0
   efekWinBencana: 0
   efekWinEkosistem: 0
@@ -33,7 +33,7 @@ MonoBehaviour:
   efekLoseEkosistem: 0
   efekLoseKeuangan: 0
   efekLoseTeknologi: 0
-  teksGeserKiri: 
-  teksGeserKanan: 
+  teksGeserKiri: Biarkan
+  teksGeserKanan: Bersihkan Laut
   introMiniGame: 
   deskripsiMiniGame: 

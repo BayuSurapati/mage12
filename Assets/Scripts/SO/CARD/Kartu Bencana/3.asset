@@ -17,13 +17,13 @@ MonoBehaviour:
   gambarKarakter: {fileID: 0}
   narasiCerita: BMKG memprediksi gempa. Perlu alokasi dana darurat sekarang?
   isMiniGameCard: 0
-  efekKiriBencana: 0
+  efekKiriBencana: 15
   efekKiriEkosistem: 0
-  efekKiriKeuangan: 0
+  efekKiriKeuangan: -15
   efekKiriTeknologi: 0
-  efekKananBencana: 0
+  efekKananBencana: -10
   efekKananEkosistem: 0
-  efekKananKeuangan: 0
+  efekKananKeuangan: 5
   efekKananTeknologi: 0
   efekWinBencana: 0
   efekWinEkosistem: 0
@@ -33,7 +33,7 @@ MonoBehaviour:
   efekLoseEkosistem: 0
   efekLoseKeuangan: 0
   efekLoseTeknologi: 0
-  teksGeserKiri: 
-  teksGeserKanan: 
+  teksGeserKiri: Tunggu Gempa
+  teksGeserKanan: Alokasikan
   introMiniGame: 
   deskripsiMiniGame: 

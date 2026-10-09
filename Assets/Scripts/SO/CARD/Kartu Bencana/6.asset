@@ -17,13 +17,13 @@ MonoBehaviour:
   gambarKarakter: {fileID: 0}
   narasiCerita: Asap kebakaran lahan mulai masuk ke kota. Bagikan masker gratis?
   isMiniGameCard: 0
-  efekKiriBencana: 0
+  efekKiriBencana: -10
   efekKiriEkosistem: 0
-  efekKiriKeuangan: 0
+  efekKiriKeuangan: -5
   efekKiriTeknologi: 0
-  efekKananBencana: 0
+  efekKananBencana: 5
   efekKananEkosistem: 0
-  efekKananKeuangan: 0
+  efekKananKeuangan: -5
   efekKananTeknologi: 0
   efekWinBencana: 0
   efekWinEkosistem: 0
@@ -33,7 +33,7 @@ MonoBehaviour:
   efekLoseEkosistem: 0
   efekLoseKeuangan: 0
   efekLoseTeknologi: 0
-  teksGeserKiri: 
-  teksGeserKanan: 
+  teksGeserKiri: Biar Beli Sendiri
+  teksGeserKanan: Bagikan Masker
   introMiniGame: 
   deskripsiMiniGame: 
