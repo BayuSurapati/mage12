@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0436a7fe4b5e03646afbd2533019d9fa, type: 3}
   m_Name: 1
   m_EditorClassIdentifier: 
-  cardID: 
-  narasiCerita: 
+  cardID: BNC-01
+  Subjek: 
+  gambarKarakter: {fileID: 0}
+  narasiCerita: Sawah kami sering kebanjiran akhir-akhir ini. Tolong bangun tanggul!
   isMiniGameCard: 0
   efekKiriBencana: 0
   efekKiriEkosistem: 0
