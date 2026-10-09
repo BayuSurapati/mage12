@@ -12,28 +12,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0436a7fe4b5e03646afbd2533019d9fa, type: 3}
   m_Name: 1
   m_EditorClassIdentifier: 
-  cardID: BNC-01
-  Subjek: Petani
+  cardID: EKO-01
+  Subjek: Nelayan
   gambarKarakter: {fileID: 0}
-  narasiCerita: Sawah kami sering kebanjiran akhir-akhir ini. Tolong bangun tanggul!
+  narasiCerita: Pabrik tekstil membuang limbah langsung ke laut! Ikan mati semua.
   isMiniGameCard: 0
-  efekKiriBencana: 0
+  efekKiriBencana: -10
   efekKiriEkosistem: 0
-  efekKiriKeuangan: 0
+  efekKiriKeuangan: 5
   efekKiriTeknologi: 0
   efekKananBencana: 0
   efekKananEkosistem: 0
   efekKananKeuangan: 0
   efekKananTeknologi: 0
-  efekWinBencana: 0
+  efekWinBencana: 15
   efekWinEkosistem: 0
-  efekWinKeuangan: 0
+  efekWinKeuangan: -10
   efekWinTeknologi: 0
   efekLoseBencana: 0
   efekLoseEkosistem: 0
   efekLoseKeuangan: 0
   efekLoseTeknologi: 0
-  teksGeserKiri: 
-  teksGeserKanan: 
+  teksGeserKiri: Tidak Ada Dana
+  teksGeserKanan: Bangun Tanggul
   introMiniGame: 
   deskripsiMiniGame: 

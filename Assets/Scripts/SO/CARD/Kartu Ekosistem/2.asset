@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0436a7fe4b5e03646afbd2533019d9fa, type: 3}
-  m_Name: 1
+  m_Name: 2
   m_EditorClassIdentifier: 
-  cardID: BNC-01
+  cardID: EKO-02
   Subjek: Petani
   gambarKarakter: {fileID: 0}
-  narasiCerita: Sawah kami sering kebanjiran akhir-akhir ini. Tolong bangun tanggul!
+  narasiCerita: Perusahaan sawit ingin menebangi hutan lindung untuk perluasan lahan.
   isMiniGameCard: 0
-  efekKiriBencana: 0
+  efekKiriBencana: -15
   efekKiriEkosistem: 0
-  efekKiriKeuangan: 0
+  efekKiriKeuangan: 5
   efekKiriTeknologi: 0
-  efekKananBencana: 0
+  efekKananBencana: 10
   efekKananEkosistem: 0
-  efekKananKeuangan: 0
-  efekKananTeknologi: 0
+  efekKananKeuangan: -10
+  efekKananTeknologi: 5
   efekWinBencana: 0
   efekWinEkosistem: 0
   efekWinKeuangan: 0
@@ -33,7 +33,7 @@ MonoBehaviour:
   efekLoseEkosistem: 0
   efekLoseKeuangan: 0
   efekLoseTeknologi: 0
-  teksGeserKiri: 
-  teksGeserKanan: 
+  teksGeserKiri: Abaikan Saja
+  teksGeserKanan: Pasang Sirine
   introMiniGame: 
   deskripsiMiniGame: 
