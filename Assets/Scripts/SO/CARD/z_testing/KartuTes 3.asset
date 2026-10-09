@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: KartuTes 3
   m_EditorClassIdentifier: 
   cardID: 03
+  Subjek: 
+  gambarKarakter: {fileID: 21300000, guid: 3e6baf65a5a34c745bd21abb3a873b9c, type: 3}
   narasiCerita: Mawar Melati Kuning
   isMiniGameCard: 0
   efekKiriBencana: -10

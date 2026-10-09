@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: KartuTes 8
   m_EditorClassIdentifier: 
   cardID: MG-02
+  Subjek: 
+  gambarKarakter: {fileID: 21300000, guid: 3e6baf65a5a34c745bd21abb3a873b9c, type: 3}
   narasiCerita: Mawar Melati Blyat
   isMiniGameCard: 1
   efekKiriBencana: -10
