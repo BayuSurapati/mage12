@@ -18,13 +18,13 @@ MonoBehaviour:
   narasiCerita: Pabrik lokal butuh bantuan robotika agar bisa ekspor.
   isMiniGameCard: 0
   efekKiriBencana: 0
-  efekKiriEkosistem: -15
-  efekKiriKeuangan: 10
-  efekKiriTeknologi: 0
+  efekKiriEkosistem: 0
+  efekKiriKeuangan: 5
+  efekKiriTeknologi: -10
   efekKananBencana: 0
-  efekKananEkosistem: 15
-  efekKananKeuangan: -10
-  efekKananTeknologi: 0
+  efekKananEkosistem: 0
+  efekKananKeuangan: -15
+  efekKananTeknologi: 15
   efekWinBencana: 0
   efekWinEkosistem: 0
   efekWinKeuangan: 0
@@ -33,7 +33,7 @@ MonoBehaviour:
   efekLoseEkosistem: 0
   efekLoseKeuangan: 0
   efekLoseTeknologi: 0
-  teksGeserKiri: Tutup Mata
-  teksGeserKanan: Segel Pabrik!
+  teksGeserKiri: Biar Manual
+  teksGeserKanan: Suntik Dana Robot
   introMiniGame: 
   deskripsiMiniGame: 

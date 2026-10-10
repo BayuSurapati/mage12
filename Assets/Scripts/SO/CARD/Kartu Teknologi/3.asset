@@ -18,13 +18,13 @@ MonoBehaviour:
   narasiCerita: Kontrak internet gratis (Wi-Fi) di taman kota mau habis.
   isMiniGameCard: 0
   efekKiriBencana: 0
-  efekKiriEkosistem: -15
+  efekKiriEkosistem: 0
   efekKiriKeuangan: 10
-  efekKiriTeknologi: 0
+  efekKiriTeknologi: -10
   efekKananBencana: 0
-  efekKananEkosistem: 15
+  efekKananEkosistem: 0
   efekKananKeuangan: -10
-  efekKananTeknologi: 0
+  efekKananTeknologi: 10
   efekWinBencana: 0
   efekWinEkosistem: 0
   efekWinKeuangan: 0
@@ -33,7 +33,7 @@ MonoBehaviour:
   efekLoseEkosistem: 0
   efekLoseKeuangan: 0
   efekLoseTeknologi: 0
-  teksGeserKiri: Tutup Mata
-  teksGeserKanan: Segel Pabrik!
+  teksGeserKiri: Tutup Wi-Fi
+  teksGeserKanan: Perpanjang Kontrak
   introMiniGame: 
   deskripsiMiniGame: 

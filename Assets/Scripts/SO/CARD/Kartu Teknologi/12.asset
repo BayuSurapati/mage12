@@ -17,14 +17,14 @@ MonoBehaviour:
   gambarKarakter: {fileID: 0}
   narasiCerita: Ada sensor cuaca cerdas untuk memprediksi panen.
   isMiniGameCard: 0
-  efekKiriBencana: 0
-  efekKiriEkosistem: -15
-  efekKiriKeuangan: 10
-  efekKiriTeknologi: 0
-  efekKananBencana: 0
-  efekKananEkosistem: 15
+  efekKiriBencana: -5
+  efekKiriEkosistem: 0
+  efekKiriKeuangan: 0
+  efekKiriTeknologi: -10
+  efekKananBencana: 5
+  efekKananEkosistem: 0
   efekKananKeuangan: -10
-  efekKananTeknologi: 0
+  efekKananTeknologi: 10
   efekWinBencana: 0
   efekWinEkosistem: 0
   efekWinKeuangan: 0
@@ -33,7 +33,7 @@ MonoBehaviour:
   efekLoseEkosistem: 0
   efekLoseKeuangan: 0
   efekLoseTeknologi: 0
-  teksGeserKiri: Tutup Mata
-  teksGeserKanan: Segel Pabrik!
+  teksGeserKiri: Percaya Insting
+  teksGeserKanan: Beli Sensor Cerdas
   introMiniGame: 
   deskripsiMiniGame: 

@@ -17,14 +17,14 @@ MonoBehaviour:
   gambarKarakter: {fileID: 0}
   narasiCerita: Perusahaan telekomunikasi mau pasang tiang 5G di area pemukiman warga.
   isMiniGameCard: 0
-  efekKiriBencana: 0
-  efekKiriEkosistem: -15
-  efekKiriKeuangan: 10
-  efekKiriTeknologi: 0
+  efekKiriBencana: 5
+  efekKiriEkosistem: 0
+  efekKiriKeuangan: 0
+  efekKiriTeknologi: -15
   efekKananBencana: 0
-  efekKananEkosistem: 15
-  efekKananKeuangan: -10
-  efekKananTeknologi: 0
+  efekKananEkosistem: -10
+  efekKananKeuangan: 5
+  efekKananTeknologi: 15
   efekWinBencana: 0
   efekWinEkosistem: 0
   efekWinKeuangan: 0
@@ -33,7 +33,7 @@ MonoBehaviour:
   efekLoseEkosistem: 0
   efekLoseKeuangan: 0
   efekLoseTeknologi: 0
-  teksGeserKiri: Tutup Mata
-  teksGeserKanan: Segel Pabrik!
+  teksGeserKiri: Larang Pemasangan
+  teksGeserKanan: Izinkan 5G
   introMiniGame: 
   deskripsiMiniGame: 
