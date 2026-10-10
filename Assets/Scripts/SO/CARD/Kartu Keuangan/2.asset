@@ -18,12 +18,12 @@ MonoBehaviour:
   narasiCerita: Ada celah untuk memungut pajak ganda pada sektor hiburan.
   isMiniGameCard: 0
   efekKiriBencana: 0
-  efekKiriEkosistem: -15
-  efekKiriKeuangan: 10
-  efekKiriTeknologi: 0
+  efekKiriEkosistem: 0
+  efekKiriKeuangan: -10
+  efekKiriTeknologi: 5
   efekKananBencana: 0
-  efekKananEkosistem: 15
-  efekKananKeuangan: -10
+  efekKananEkosistem: -5
+  efekKananKeuangan: 15
   efekKananTeknologi: 0
   efekWinBencana: 0
   efekWinEkosistem: 0
@@ -33,7 +33,7 @@ MonoBehaviour:
   efekLoseEkosistem: 0
   efekLoseKeuangan: 0
   efekLoseTeknologi: 0
-  teksGeserKiri: Tutup Mata
-  teksGeserKanan: Segel Pabrik!
+  teksGeserKiri: Jangan Memeras
+  teksGeserKanan: Tarik Pajaknya!
   introMiniGame: 
   deskripsiMiniGame: 

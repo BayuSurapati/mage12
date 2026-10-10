@@ -17,14 +17,14 @@ MonoBehaviour:
   gambarKarakter: {fileID: 0}
   narasiCerita: Kredit Usaha Rakyat (KUR) bunganya ingin disubsidi penuh.
   isMiniGameCard: 0
-  efekKiriBencana: 0
-  efekKiriEkosistem: -15
+  efekKiriBencana: -5
+  efekKiriEkosistem: 0
   efekKiriKeuangan: 10
   efekKiriTeknologi: 0
   efekKananBencana: 0
-  efekKananEkosistem: 15
-  efekKananKeuangan: -10
-  efekKananTeknologi: 0
+  efekKananEkosistem: 0
+  efekKananKeuangan: -15
+  efekKananTeknologi: 5
   efekWinBencana: 0
   efekWinEkosistem: 0
   efekWinKeuangan: 0
@@ -33,7 +33,7 @@ MonoBehaviour:
   efekLoseEkosistem: 0
   efekLoseKeuangan: 0
   efekLoseTeknologi: 0
-  teksGeserKiri: Tutup Mata
-  teksGeserKanan: Segel Pabrik!
+  teksGeserKiri: Biar Bayar Bunga
+  teksGeserKanan: Subsidi Bunga 0%
   introMiniGame: 
   deskripsiMiniGame: 

@@ -18,12 +18,12 @@ MonoBehaviour:
   narasiCerita: Distributor pupuk memonopoli harga. Buat kebiijakan pupuk?
   isMiniGameCard: 0
   efekKiriBencana: 0
-  efekKiriEkosistem: -15
-  efekKiriKeuangan: 10
+  efekKiriEkosistem: -5
+  efekKiriKeuangan: 5
   efekKiriTeknologi: 0
   efekKananBencana: 0
-  efekKananEkosistem: 15
-  efekKananKeuangan: -10
+  efekKananEkosistem: 10
+  efekKananKeuangan: -15
   efekKananTeknologi: 0
   efekWinBencana: 0
   efekWinEkosistem: 0
@@ -33,7 +33,7 @@ MonoBehaviour:
   efekLoseEkosistem: 0
   efekLoseKeuangan: 0
   efekLoseTeknologi: 0
-  teksGeserKiri: Tutup Mata
-  teksGeserKanan: Segel Pabrik!
+  teksGeserKiri: Biar Swasta Main
+  teksGeserKanan: Bikin BUMD
   introMiniGame: 
   deskripsiMiniGame: 

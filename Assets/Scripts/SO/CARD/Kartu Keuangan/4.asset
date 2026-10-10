@@ -17,13 +17,13 @@ MonoBehaviour:
   gambarKarakter: {fileID: 0}
   narasiCerita: UMK (Upah Minimum Kota) mau dinaikkan 15%. Pengusaha menolak.
   isMiniGameCard: 0
-  efekKiriBencana: 0
-  efekKiriEkosistem: -15
+  efekKiriBencana: -10
+  efekKiriEkosistem: 0
   efekKiriKeuangan: 10
   efekKiriTeknologi: 0
   efekKananBencana: 0
-  efekKananEkosistem: 15
-  efekKananKeuangan: -10
+  efekKananEkosistem: 5
+  efekKananKeuangan: -15
   efekKananTeknologi: 0
   efekWinBencana: 0
   efekWinEkosistem: 0
@@ -33,7 +33,7 @@ MonoBehaviour:
   efekLoseEkosistem: 0
   efekLoseKeuangan: 0
   efekLoseTeknologi: 0
-  teksGeserKiri: Tutup Mata
-  teksGeserKanan: Segel Pabrik!
+  teksGeserKiri: Pro Pengusaha
+  teksGeserKanan: Pro Pekerja
   introMiniGame: 
   deskripsiMiniGame: 
