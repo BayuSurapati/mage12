@@ -17,13 +17,13 @@ MonoBehaviour:
   gambarKarakter: {fileID: 0}
   narasiCerita: Pabrik semen minta izin buka lahan tambang di area bukit karst.
   isMiniGameCard: 0
-  efekKiriBencana: 0
-  efekKiriEkosistem: 0
-  efekKiriKeuangan: 0
+  efekKiriBencana: -5
+  efekKiriEkosistem: -15
+  efekKiriKeuangan: 15
   efekKiriTeknologi: 0
   efekKananBencana: 0
-  efekKananEkosistem: 0
-  efekKananKeuangan: 0
+  efekKananEkosistem: 15
+  efekKananKeuangan: -10
   efekKananTeknologi: 0
   efekWinBencana: 0
   efekWinEkosistem: 0
@@ -33,7 +33,7 @@ MonoBehaviour:
   efekLoseEkosistem: 0
   efekLoseKeuangan: 0
   efekLoseTeknologi: 0
-  teksGeserKiri: 
-  teksGeserKanan: 
+  teksGeserKiri: Izinkan Pabrik
+  teksGeserKanan: Tolak Izin
   introMiniGame: 
   deskripsiMiniGame: 

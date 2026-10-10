@@ -19,13 +19,13 @@ MonoBehaviour:
     ozon.
   isMiniGameCard: 0
   efekKiriBencana: 0
-  efekKiriEkosistem: 0
-  efekKiriKeuangan: 0
+  efekKiriEkosistem: -10
+  efekKiriKeuangan: 5
   efekKiriTeknologi: 0
   efekKananBencana: 0
-  efekKananEkosistem: 0
-  efekKananKeuangan: 0
-  efekKananTeknologi: 0
+  efekKananEkosistem: 10
+  efekKananKeuangan: -15
+  efekKananTeknologi: 5
   efekWinBencana: 0
   efekWinEkosistem: 0
   efekWinKeuangan: 0
@@ -34,7 +34,7 @@ MonoBehaviour:
   efekLoseEkosistem: 0
   efekLoseKeuangan: 0
   efekLoseTeknologi: 0
-  teksGeserKiri: 
-  teksGeserKanan: 
+  teksGeserKiri: Biarkan
+  teksGeserKanan: Ganti Sistem AC
   introMiniGame: 
   deskripsiMiniGame: 

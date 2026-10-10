@@ -17,12 +17,12 @@ MonoBehaviour:
   gambarKarakter: {fileID: 0}
   narasiCerita: Perusahaan sawit ingin menebangi hutan lindung untuk perluasan lahan.
   isMiniGameCard: 0
-  efekKiriBencana: -15
-  efekKiriEkosistem: 0
-  efekKiriKeuangan: 5
+  efekKiriBencana: -10
+  efekKiriEkosistem: -15
+  efekKiriKeuangan: 15
   efekKiriTeknologi: 0
-  efekKananBencana: 10
-  efekKananEkosistem: 0
+  efekKananBencana: 0
+  efekKananEkosistem: 10
   efekKananKeuangan: -10
   efekKananTeknologi: 5
   efekWinBencana: 0
@@ -33,7 +33,7 @@ MonoBehaviour:
   efekLoseEkosistem: 0
   efekLoseKeuangan: 0
   efekLoseTeknologi: 0
-  teksGeserKiri: Abaikan Saja
-  teksGeserKanan: Pasang Sirine
+  teksGeserKiri: Izinkan
+  teksGeserKanan: Tolak Keras
   introMiniGame: 
   deskripsiMiniGame: 

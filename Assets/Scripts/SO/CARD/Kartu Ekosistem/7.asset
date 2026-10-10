@@ -15,15 +15,15 @@ MonoBehaviour:
   cardID: EKO-07
   Subjek: Petani
   gambarKarakter: {fileID: 0}
-  narasiCerita: Kami ingin beralih ke pupuk organik
+  narasiCerita: Kami ingin beralih ke pupuk organik tapi butuh subsidi.
   isMiniGameCard: 0
   efekKiriBencana: 0
-  efekKiriEkosistem: 0
-  efekKiriKeuangan: 0
+  efekKiriEkosistem: -5
+  efekKiriKeuangan: 5
   efekKiriTeknologi: 0
   efekKananBencana: 0
-  efekKananEkosistem: 0
-  efekKananKeuangan: 0
+  efekKananEkosistem: 10
+  efekKananKeuangan: -10
   efekKananTeknologi: 0
   efekWinBencana: 0
   efekWinEkosistem: 0
@@ -33,7 +33,7 @@ MonoBehaviour:
   efekLoseEkosistem: 0
   efekLoseKeuangan: 0
   efekLoseTeknologi: 0
-  teksGeserKiri: 
-  teksGeserKanan: 
+  teksGeserKiri: Suruh Beli Sendiri
+  teksGeserKanan: Berikan Subsidi
   introMiniGame: 
   deskripsiMiniGame: 

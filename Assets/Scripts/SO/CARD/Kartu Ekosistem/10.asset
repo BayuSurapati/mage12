@@ -19,12 +19,12 @@ MonoBehaviour:
     habis?
   isMiniGameCard: 0
   efekKiriBencana: 0
-  efekKiriEkosistem: 0
+  efekKiriEkosistem: -10
   efekKiriKeuangan: 0
-  efekKiriTeknologi: 0
+  efekKiriTeknologi: 5
   efekKananBencana: 0
-  efekKananEkosistem: 0
-  efekKananKeuangan: 0
+  efekKananEkosistem: 5
+  efekKananKeuangan: -5
   efekKananTeknologi: 0
   efekWinBencana: 0
   efekWinEkosistem: 0
@@ -34,7 +34,7 @@ MonoBehaviour:
   efekLoseEkosistem: 0
   efekLoseKeuangan: 0
   efekLoseTeknologi: 0
-  teksGeserKiri: 
-  teksGeserKanan: 
+  teksGeserKiri: Tebang Semua
+  teksGeserKanan: Rapikan Saja
   introMiniGame: 
   deskripsiMiniGame: 

@@ -17,13 +17,13 @@ MonoBehaviour:
   gambarKarakter: {fileID: 0}
   narasiCerita: Mangrove mau ditebang untuk tambak udang raksasa.
   isMiniGameCard: 0
-  efekKiriBencana: 0
-  efekKiriEkosistem: 0
-  efekKiriKeuangan: 0
+  efekKiriBencana: 10
+  efekKiriEkosistem: 15
+  efekKiriKeuangan: -10
   efekKiriTeknologi: 0
-  efekKananBencana: 0
-  efekKananEkosistem: 0
-  efekKananKeuangan: 0
+  efekKananBencana: -10
+  efekKananEkosistem: -15
+  efekKananKeuangan: 15
   efekKananTeknologi: 0
   efekWinBencana: 0
   efekWinEkosistem: 0
@@ -33,7 +33,7 @@ MonoBehaviour:
   efekLoseEkosistem: 0
   efekLoseKeuangan: 0
   efekLoseTeknologi: 0
-  teksGeserKiri: 
-  teksGeserKanan: 
+  teksGeserKiri: Bagus Buat Ekonomi
+  teksGeserKanan: Lindungi Mangrove
   introMiniGame: 
   deskripsiMiniGame: 

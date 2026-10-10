@@ -17,14 +17,14 @@ MonoBehaviour:
   gambarKarakter: {fileID: 0}
   narasiCerita: TPA kota sudah overkapasitas. Bangun alat insinerator canggih?
   isMiniGameCard: 0
-  efekKiriBencana: -10
-  efekKiriEkosistem: 0
-  efekKiriKeuangan: 5
+  efekKiriBencana: -5
+  efekKiriEkosistem: -15
+  efekKiriKeuangan: 0
   efekKiriTeknologi: 0
-  efekKananBencana: 15
-  efekKananEkosistem: 0
+  efekKananBencana: 0
+  efekKananEkosistem: 10
   efekKananKeuangan: -15
-  efekKananTeknologi: 0
+  efekKananTeknologi: 10
   efekWinBencana: 0
   efekWinEkosistem: 0
   efekWinKeuangan: 0
@@ -33,7 +33,7 @@ MonoBehaviour:
   efekLoseEkosistem: 0
   efekLoseKeuangan: 0
   efekLoseTeknologi: 0
-  teksGeserKiri: Tunggu Gempa
-  teksGeserKanan: Alokasikan
+  teksGeserKiri: Tumpuk Saja
+  teksGeserKanan: Beli Insinerator
   introMiniGame: 
   deskripsiMiniGame: 

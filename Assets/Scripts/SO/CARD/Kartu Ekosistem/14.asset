@@ -18,12 +18,12 @@ MonoBehaviour:
   narasiCerita: Kapal asing sering mencuri ikan dan merusak ekosistem laut kita!
   isMiniGameCard: 0
   efekKiriBencana: 0
-  efekKiriEkosistem: 0
-  efekKiriKeuangan: 0
+  efekKiriEkosistem: -10
+  efekKiriKeuangan: -5
   efekKiriTeknologi: 0
   efekKananBencana: 0
-  efekKananEkosistem: 0
-  efekKananKeuangan: 0
+  efekKananEkosistem: 15
+  efekKananKeuangan: -5
   efekKananTeknologi: 0
   efekWinBencana: 0
   efekWinEkosistem: 0
@@ -33,7 +33,7 @@ MonoBehaviour:
   efekLoseEkosistem: 0
   efekLoseKeuangan: 0
   efekLoseTeknologi: 0
-  teksGeserKiri: 
-  teksGeserKanan: 
+  teksGeserKiri: Biarkan Saja
+  teksGeserKanan: Tenggelamkan!
   introMiniGame: 
   deskripsiMiniGame: 
