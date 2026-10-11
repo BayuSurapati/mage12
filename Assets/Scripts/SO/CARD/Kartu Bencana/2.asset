@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardID: BNC-02
   Subjek: Nelayan
-  gambarKarakter: {fileID: 0}
+  gambarKarakter: {fileID: 21300000, guid: 578a547a13f28bd42a7c308d7db5bb52, type: 3}
   narasiCerita: Gelombang pasang makin tinggi. Kami butuh sistem peringatan dini
     di pantai.
   isMiniGameCard: 0

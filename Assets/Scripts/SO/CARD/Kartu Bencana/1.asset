@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardID: BNC-01
   Subjek: Petani
-  gambarKarakter: {fileID: 0}
+  gambarKarakter: {fileID: 21300000, guid: 89c5fe1ab9448cc4d8b62f670dc40b51, type: 3}
   narasiCerita: Sawah kami sering kebanjiran akhir-akhir ini. Tolong bangun tanggul!
   isMiniGameCard: 0
   efekKiriBencana: -10

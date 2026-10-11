@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0436a7fe4b5e03646afbd2533019d9fa, type: 3}
   m_Name: 3
   m_EditorClassIdentifier: 
-  cardID: MG-01
-  Subjek: Pejabat
+  cardID: MG-03
+  Subjek: Petani
   gambarKarakter: {fileID: 0}
-  narasiCerita: Ransomware menyerang server kota! Data warga terancam bocor!
+  narasiCerita: Kebakaran hutan tak terkendali! Helikopter water-bombing siap!
   isMiniGameCard: 1
   efekKiriBencana: 0
   efekKiriEkosistem: 0
@@ -33,7 +33,7 @@ MonoBehaviour:
   efekLoseEkosistem: 0
   efekLoseKeuangan: 0
   efekLoseTeknologi: 0
-  teksGeserKiri: Astaga...
-  teksGeserKanan: Gawat!
+  teksGeserKiri: Siram Air!
+  teksGeserKanan: Padamkan!
   introMiniGame: 
   deskripsiMiniGame: 
