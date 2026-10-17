@@ -1,5 +1,7 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -15,6 +17,9 @@ public class GameManager : MonoBehaviour
     public int currentMonth = 1;
     private const int MAX_MONTHS = 30;
 
+    [Header("Referensi UI (Bulan/Turn)")]
+    public TextMeshProUGUI monthTextUI;
+
     [Header("Referensi Modul Lain")]
     public CardSwipe cardSwipeScript;
     public StatsManager statsManager;
@@ -23,18 +28,23 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(statsManager != null)
+        if (statsManager != null)
         {
             statsManager.ResetStats();
         }
         GenerateSessionDeck();
+        currentMonth = 1;
+        UpdateTurnDisplay();
+
+
+
         DrawCard();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private void GenerateSessionDeck()
@@ -113,14 +123,14 @@ public class GameManager : MonoBehaviour
 
     public void DrawCard()
     {
-        if(currentMonth > MAX_MONTHS)
+        if (currentMonth > MAX_MONTHS)
         {
             Debug.Log("Permainan Selesai! Pemain Bertahan 30 Bulan!");
             // TODO: Panggil fungsi Game Over (Win Condition)
             return;
         }
 
-        if(currentSessionDeck.Count > 0)
+        if (currentSessionDeck.Count > 0)
         {
             CardData nextCard = currentSessionDeck[0];
             currentSessionDeck.RemoveAt(0);
@@ -156,4 +166,21 @@ public class GameManager : MonoBehaviour
             list[randomIndex] = temp;
         }
     }
+
+    private void UpdateTurnDisplay()
+    {
+        if (monthTextUI != null)
+        {
+            // Menampilkan format "Day-1", "Day-2", dst di pojok kanan atas
+            monthTextUI.text = "Day-" + currentMonth.ToString();
+
+            // Tambahan opsional: Efek membal (pop) pada teks saat angkanya berubah 
+            // agar pemain sadar waktu telah berlalu
+            monthTextUI.transform.DOScale(1.2f, 0.2f).SetEase(Ease.OutBack).OnComplete(() =>
+            {
+                monthTextUI.transform.DOScale(1f, 0.2f);
+            });
+        }
+    }
 }
+

@@ -12,10 +12,14 @@ public class MiniGame_CyberAttack : MonoBehaviour
     public int totalPopups = 8;   // Total 8 iklan virus
 
     [Header("Referensi UI")]
-    public GameObject popupPrefab;     // Masukkan Prefab Popup_Virus ke sini
+    //public GameObject popupPrefab;     // Masukkan Prefab Popup_Virus ke sini
     public Transform popupContainer;   // Masukkan Panel_CyberAttack ke sini (sebagai induk)
     public TextMeshProUGUI timerText;  // Teks hitung mundur
     public Slider progressBar;         // Progress bar (Slider)
+
+    [Header("Varian Prefab Virus")]
+    [Tooltip("Masukkan berbagai varian desain Pop-up Error ke dalam array ini")]
+    public GameObject[] popupPrefabs;
 
     // Variabel internal
     private float timeRemaining;
@@ -62,15 +66,15 @@ public class MiniGame_CyberAttack : MonoBehaviour
         for (int i = 0; i < totalPopups; i++)
         {
             // Cetak Prefab ke dalam Container
-            GameObject newPopup = Instantiate(popupPrefab, popupContainer);
+            GameObject newPopup = Instantiate(popupPrefabs[Random.Range(0, popupPrefabs.Length)], popupContainer);
 
             // Acak posisinya di layar
             RectTransform rect = newPopup.GetComponent<RectTransform>();
 
             // Catatan: Angka ini tergantung resolusi layar Canvas Anda (misal 1080x1920)
             // Sesuaikan range ini agar pop-up tidak keluar batas layar
-            float randomX = Random.Range(-350f, 500f);
-            float randomY = Random.Range(-400f, 160f);
+            float randomX = Random.Range(-700f, 755f);
+            float randomY = Random.Range(-300f, 180f);
             rect.anchoredPosition = new Vector2(randomX, randomY);
 
             // Tambahkan perintah klik ke tombol secara otomatis lewat skrip
