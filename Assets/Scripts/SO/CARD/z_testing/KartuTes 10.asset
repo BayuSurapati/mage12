@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardID: MG-04
   Subjek: 
-  gambarKarakter: {fileID: 21300000, guid: 3e6baf65a5a34c745bd21abb3a873b9c, type: 3}
-  narasiCerita: Mawar Melati Kontol
+  gambarKarakter: {fileID: 21300000, guid: 55ac5bba510ab4b41a8372e35dd6b245, type: 3}
+  narasiCerita: Awas Demo Massal PAK!
   isMiniGameCard: 1
   efekKiriBencana: -10
   efekKiriEkosistem: 0
@@ -36,4 +36,4 @@ MonoBehaviour:
   teksGeserKiri: Mainkan...
   teksGeserKanan: Mainkan...
   introMiniGame: Demo Massal
-  deskripsiMiniGame: Demo Massal
+  deskripsiMiniGame: Antisipasi Demo Massal!

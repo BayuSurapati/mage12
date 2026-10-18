@@ -7,28 +7,24 @@ public class MiniGameManager : MonoBehaviour
     public StatsManager statsManager;
     public CardSwipe cardSwipeScript;
 
-    [Header("Referensi Intro & Result UI Mini Games")]
+    [Header("Referensi Intro UI Mini Games")]
     public MiniGame_IntroUI introUI;
-    public MiniGames_ResultUI resultUI;
 
     [Header("Referensi Script Mini-Games")]
-    // Masukkan referensi skrip mini-game spesifik di sini
     public MiniGame_CyberAttack cyberAttackGame;
     public MiniGame_MitigasiBencana mitigasiBencanaGame;
     public MiniGame_SortirSampah sampahGame;
     public MiniGame_DemoMassal demoMassalGame;
     public MiniGame_PuzzleMath puzzleMathGame;
-    // public MiniGame_Karhutla karhutlaGame; (untuk nanti)
 
-    private CardData currentMiniGameCard;
+    [HideInInspector] public CardData currentMiniGameCard;
 
     public void TriggerMiniGame(CardData cardData)
     {
         currentMiniGameCard = cardData;
         cardSwipeScript.enabled = false; // Kunci kartu
 
-        //Buka Intro
-        if(introUI != null)
+        if (introUI != null)
         {
             introUI.ShowIntro(cardData);
         }
@@ -36,93 +32,36 @@ public class MiniGameManager : MonoBehaviour
 
     public void StartMiniGame()
     {
-        // Logika untuk menentukan mini-game mana yang dimainkan
-        // (Bisa menggunakan ID kartu atau Enum jenis mini-game dari CardData)
-
-        if (currentMiniGameCard.cardID == "MG-01") // Anggap MG-01 adalah ID untuk Cyber Attack
+        if (currentMiniGameCard.cardID == "MG-01" && cyberAttackGame != null)
         {
-            // Panel_CyberAttack harusnya diaktifkan di dalam fungsi StartMiniGame() ini
-            if (cyberAttackGame != null)
-            {
-                cyberAttackGame.gameObject.SetActive(true); // Nyalakan panel spesifiknya
-                cyberAttackGame.StartMiniGame();
-            }
+            cyberAttackGame.gameObject.SetActive(true);
+            cyberAttackGame.StartMiniGame();
         }
-
-        if(currentMiniGameCard.cardID == "MG-02") // Anggap MG-02 adalah ID untuk Mitigasi Bencana
+        else if (currentMiniGameCard.cardID == "MG-02" && mitigasiBencanaGame != null)
         {
-            if (mitigasiBencanaGame != null)
-            {
-                mitigasiBencanaGame.gameObject.SetActive(true); // Nyalakan panel spesifiknya
-                mitigasiBencanaGame.StartMiniGame();
-            }
+            mitigasiBencanaGame.gameObject.SetActive(true);
+            mitigasiBencanaGame.StartMiniGame();
         }
-
-        if (currentMiniGameCard.cardID == "MG-03") // Anggap MG-03 adalah ID untuk Sortir Sampah
+        else if (currentMiniGameCard.cardID == "MG-03" && sampahGame != null)
         {
-            if (sampahGame != null)
-            {
-                sampahGame.gameObject.SetActive(true); // Nyalakan panel spesifiknya
-                sampahGame.StartMiniGame();
-            }
+            sampahGame.gameObject.SetActive(true);
+            sampahGame.StartMiniGame();
         }
-
-        if (currentMiniGameCard.cardID == "MG-04") // Anggap MG-04 adalah ID untuk Demo Massal
+        else if (currentMiniGameCard.cardID == "MG-04" && demoMassalGame != null)
         {
-            if (demoMassalGame != null)
-            {
-                demoMassalGame.gameObject.SetActive(true); // Nyalakan panel spesifiknya
-                demoMassalGame.StartMiniGame();
-            }
+            demoMassalGame.gameObject.SetActive(true);
+            demoMassalGame.StartMiniGame();
         }
-
-        if (currentMiniGameCard.cardID == "MG-05") // Anggap MG-05 adalah ID untuk Puzzle Math
+        else if (currentMiniGameCard.cardID == "MG-05" && puzzleMathGame != null)
         {
-            if (puzzleMathGame != null)
-            {
-                puzzleMathGame.gameObject.SetActive(true); // Nyalakan panel spesifiknya
-                puzzleMathGame.StartMiniGame();
-            }
+            puzzleMathGame.gameObject.SetActive(true);
+            puzzleMathGame.StartMiniGame();
         }
-        // else if (cardData.cardID == "MG-01") { jalankan mini-game banjir... }
     }
 
     public void CompleteMiniGame(bool isWin)
     {
-        // Matikan panel spesifik setelah selesai
-        if (cyberAttackGame != null && cyberAttackGame.gameObject.activeSelf)
-        {
-            cyberAttackGame.gameObject.SetActive(false);
-        }
-
-        if (mitigasiBencanaGame != null && mitigasiBencanaGame.gameObject.activeSelf)
-        {
-            mitigasiBencanaGame.gameObject.SetActive(false);
-        }
-
-        if (sampahGame != null &&   sampahGame.gameObject.activeSelf)
-        {
-            sampahGame.gameObject.SetActive(false);
-        }
-
-        if (demoMassalGame != null && demoMassalGame.gameObject.activeSelf)
-        {
-            demoMassalGame.gameObject.SetActive(false);
-        }
-
-        if (puzzleMathGame != null && puzzleMathGame.gameObject.activeSelf)
-        {
-            puzzleMathGame.gameObject.SetActive(false);
-        }
-
-        if (resultUI != null)
-        {
-            resultUI.ShowResult(isWin, currentMiniGameCard);
-        }
-    }
-
-    public void ContinueAfterMiniGame(bool isWin)
-    {
+        // 1. Terapkan efek stat seketika saat game selesai
         if (isWin)
         {
             statsManager.ApplyMiniGameEffects(
@@ -141,10 +80,23 @@ public class MiniGameManager : MonoBehaviour
                 currentMiniGameCard.efekLoseTeknologi
             );
         }
+        // PENTING: Jangan matikan panel game di sini, agar panel Hasil (Menang/Kalah) tetap terlihat!
+    }
 
-        // Buka kunci kartu dan lanjutkan game
+    // 👇 FUNGSI BARU UNTUK MENUTUP PANEL & LANJUT BULAN 👇
+    public void LanjutKeBulanBerikutnya()
+    {
+        // 1. Matikan semua panel mini-game dari layar (Ini yang membuat panel tertutup)
+        if (cyberAttackGame != null) cyberAttackGame.gameObject.SetActive(false);
+        if (mitigasiBencanaGame != null) mitigasiBencanaGame.gameObject.SetActive(false);
+        if (sampahGame != null) sampahGame.gameObject.SetActive(false);
+        if (demoMassalGame != null) demoMassalGame.gameObject.SetActive(false);
+        if (puzzleMathGame != null) puzzleMathGame.gameObject.SetActive(false);
+
+        // 2. Buka kunci kartu
         cardSwipeScript.enabled = true;
 
+        // 3. Maju ke bulan berikutnya
         if (!statsManager.isGameOver())
         {
             gameManager.AdvanceMonth();

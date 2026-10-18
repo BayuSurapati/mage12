@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardID: MG-01
   Subjek: 
-  gambarKarakter: {fileID: 21300000, guid: 3e6baf65a5a34c745bd21abb3a873b9c, type: 3}
-  narasiCerita: Mawar Melati Kontol
+  gambarKarakter: {fileID: 21300000, guid: 9fb535c6d605ede45aa7fc40e8c27112, type: 3}
+  narasiCerita: Kuatkan Keamanan Cyber Daerah PAK!
   isMiniGameCard: 1
   efekKiriBencana: -10
   efekKiriEkosistem: 0
@@ -25,15 +25,15 @@ MonoBehaviour:
   efekKananEkosistem: 5
   efekKananKeuangan: 0
   efekKananTeknologi: 0
-  efekWinBencana: 20
+  efekWinBencana: 0
   efekWinEkosistem: 0
   efekWinKeuangan: 0
-  efekWinTeknologi: 20
-  efekLoseBencana: -35
+  efekWinTeknologi: 15
+  efekLoseBencana: 0
   efekLoseEkosistem: 0
   efekLoseKeuangan: 0
-  efekLoseTeknologi: 0
+  efekLoseTeknologi: -15
   teksGeserKiri: Mainkan...
   teksGeserKanan: Mainkan...
   introMiniGame: Cyber Attack
-  deskripsiMiniGame: sadawdawdsadwaawd
+  deskripsiMiniGame: Hapus semua virusnya!

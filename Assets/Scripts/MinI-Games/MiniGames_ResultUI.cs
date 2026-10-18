@@ -85,7 +85,7 @@ public class MiniGames_ResultUI : MonoBehaviour
 
         if(miniGameManager != null)
         {
-            miniGameManager.ContinueAfterMiniGame(currentResultWin);
+            miniGameManager.LanjutKeBulanBerikutnya();
         }
     }
 }

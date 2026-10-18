@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardID: MG-05
   Subjek: 
-  gambarKarakter: {fileID: 21300000, guid: 3e6baf65a5a34c745bd21abb3a873b9c, type: 3}
-  narasiCerita: Mawar Melati Ungu
+  gambarKarakter: {fileID: 21300000, guid: 68c47256bf96b8349b565050dc7b1573, type: 3}
+  narasiCerita: Antisipasi Keuangan PAK!
   isMiniGameCard: 1
   efekKiriBencana: -10
   efekKiriEkosistem: 0
@@ -36,4 +36,4 @@ MonoBehaviour:
   teksGeserKiri: Mainkan...
   teksGeserKanan: Mainkan...
   introMiniGame: Puzzle Math
-  deskripsiMiniGame: wadawd
+  deskripsiMiniGame: Selesaikan Masalah Keuangan Negara!

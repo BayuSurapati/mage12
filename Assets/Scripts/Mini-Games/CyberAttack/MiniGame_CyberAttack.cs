@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 
 public class MiniGame_CyberAttack : MonoBehaviour
 {
@@ -8,114 +9,185 @@ public class MiniGame_CyberAttack : MonoBehaviour
     public MiniGameManager miniGameManager;
 
     [Header("Pengaturan Game")]
-    public float timeLimit = 10f; // Batas waktu 10 detik
-    public int totalPopups = 8;   // Total 8 iklan virus
+    public float timeLimit = 10f;
+    public int totalPopups = 8;
 
-    [Header("Referensi UI")]
-    //public GameObject popupPrefab;     // Masukkan Prefab Popup_Virus ke sini
-    public Transform popupContainer;   // Masukkan Panel_CyberAttack ke sini (sebagai induk)
-    public TextMeshProUGUI timerText;  // Teks hitung mundur
-    public Slider progressBar;         // Progress bar (Slider)
+    [Header("Referensi UI Gameplay")]
+    public Transform popupContainer;
+    public TextMeshProUGUI timerText;
+    public Slider progressBar;
 
     [Header("Varian Prefab Virus")]
-    [Tooltip("Masukkan berbagai varian desain Pop-up Error ke dalam array ini")]
     public GameObject[] popupPrefabs;
+
+    [Header("UI Hasil (PANEL MENANG)")]
+    public GameObject panelMenang;
+    public CanvasGroup canvasGroupMenang;
+    public RectTransform rectMenang;
+
+    [Header("UI Hasil (PANEL KALAH)")]
+    public GameObject panelKalah;
+    public CanvasGroup canvasGroupKalah;
+    public RectTransform rectKalah;
+
+    // 👇 BARU: Referensi untuk segitiga peringatan kuning 👇
+    public CanvasGroup warningTriangleIcon;
 
     // Variabel internal
     private float timeRemaining;
     private int popupsClosed = 0;
     private bool isGameActive = false;
 
-    // --- FUNGSI MEMULAI GAME ---
     public void StartMiniGame()
     {
-        // Reset semua nilai
         timeRemaining = timeLimit;
         popupsClosed = 0;
-
         progressBar.minValue = 0;
         progressBar.maxValue = totalPopups;
         progressBar.value = 0;
+        isGameActive = false;
 
-        SpawnAllPopups(); // Munculkan 8 iklan sekaligus
+        // Matikan panel
+        if (panelMenang != null) panelMenang.SetActive(false);
+        if (panelKalah != null) panelKalah.SetActive(false);
 
-        isGameActive = true;
+        // Hentikan animasi berkedip jika game diulang
+        if (warningTriangleIcon != null) DOTween.Kill(warningTriangleIcon);
+
+        SpawnAllPopupsAnimated();
     }
 
     void Update()
     {
-        if (!isGameActive) return; // Jika game belum mulai atau sudah selesai, abaikan
+        if (!isGameActive) return;
 
-        // Jalankan hitung mundur
         timeRemaining -= Time.deltaTime;
-
-        // Tampilkan teks dengan membulatkan angka ke atas (misal 9.8 jadi 10)
         timerText.text = "Waktu Tersisa: " + Mathf.CeilToInt(timeRemaining).ToString() + "s";
 
-        // Cek jika waktu habis
         if (timeRemaining <= 0)
         {
             timerText.text = "Waktu Habis!";
-            EndGame(false); // Kalah
+            EndGame(false);
         }
     }
 
-    // --- FUNGSI MUNCULKAN IKLAN ---
-    private void SpawnAllPopups()
+    private void SpawnAllPopupsAnimated()
     {
+        if (popupPrefabs == null || popupPrefabs.Length == 0) return;
+
         for (int i = 0; i < totalPopups; i++)
         {
-            // Cetak Prefab ke dalam Container
-            GameObject newPopup = Instantiate(popupPrefabs[Random.Range(0, popupPrefabs.Length)], popupContainer);
-
-            // Acak posisinya di layar
+            int randomIndex = Random.Range(0, popupPrefabs.Length);
+            GameObject newPopup = Instantiate(popupPrefabs[randomIndex], popupContainer);
             RectTransform rect = newPopup.GetComponent<RectTransform>();
 
-            // Catatan: Angka ini tergantung resolusi layar Canvas Anda (misal 1080x1920)
-            // Sesuaikan range ini agar pop-up tidak keluar batas layar
             float randomX = Random.Range(-700f, 755f);
             float randomY = Random.Range(-300f, 180f);
             rect.anchoredPosition = new Vector2(randomX, randomY);
 
-            // Tambahkan perintah klik ke tombol secara otomatis lewat skrip
+            rect.localScale = Vector3.zero;
+            rect.DOScale(Vector3.one, 0.4f).SetEase(Ease.OutBack).SetDelay(i * 0.1f);
+
             Button popupBtn = newPopup.GetComponent<Button>();
-            popupBtn.onClick.AddListener(() => OnPopupClicked(newPopup));
+            if (popupBtn != null)
+            {
+                GameObject capturedPopup = newPopup;
+                popupBtn.onClick.AddListener(() => OnPopupClickedAnimated(capturedPopup));
+            }
         }
+
+        float totalIntroTime = (totalPopups * 0.1f) + 0.4f;
+        DOVirtual.DelayedCall(totalIntroTime, () => isGameActive = true);
     }
 
-    // --- FUNGSI SAAT PEMAIN MENEKAN IKLAN ---
-    private void OnPopupClicked(GameObject popup)
+    private void OnPopupClickedAnimated(GameObject popup)
     {
         if (!isGameActive) return;
 
-        Destroy(popup); // Hancurkan objek pop-up dari layar
+        popup.GetComponent<Button>().interactable = false;
 
-        popupsClosed++; // Tambah skor
-        progressBar.value = popupsClosed; // Update UI Slider
-
-        // Cek kondisi menang
-        if (popupsClosed >= totalPopups)
+        popup.transform.DOScale(Vector3.zero, 0.2f).SetEase(Ease.InBack).OnComplete(() =>
         {
-            EndGame(true); // Menang
-        }
+            Destroy(popup);
+            popupsClosed++;
+            progressBar.value = popupsClosed;
+
+            progressBar.transform.DOPunchScale(new Vector3(0.1f, 0.1f, 0f), 0.2f, 1);
+
+            if (popupsClosed >= totalPopups)
+            {
+                EndGame(true);
+            }
+        });
     }
 
-    // --- FUNGSI MENGAKHIRI GAME ---
     private void EndGame(bool isWin)
     {
         isGameActive = false;
 
-        // Bersihkan sisa pop-up di layar (jika kalah karena kehabisan waktu)
         foreach (Transform child in popupContainer)
         {
-            // Jangan hapus Slider atau Text, hanya hapus objek yang punya komponen Button (Pop-up)
             if (child.GetComponent<Button>() != null)
             {
-                Destroy(child.gameObject);
+                child.DOScale(Vector3.zero, 0.2f).OnComplete(() => Destroy(child.gameObject));
             }
         }
 
-        // Lapor ke MiniGameManager bahwa game selesai (mengirim True atau False)
         miniGameManager.CompleteMiniGame(isWin);
+
+        DOVirtual.DelayedCall(0.5f, () => ShowResultPanelAnimated(isWin));
+    }
+
+    private void ShowResultPanelAnimated(bool isWin)
+    {
+        if (isWin)
+        {
+            if (panelMenang != null)
+            {
+                panelMenang.SetActive(true);
+                if (rectMenang != null)
+                {
+                    rectMenang.anchoredPosition = new Vector2(0, -1000f);
+                    rectMenang.DOAnchorPosY(0, 0.8f).SetEase(Ease.OutBack);
+                }
+                if (canvasGroupMenang != null)
+                {
+                    canvasGroupMenang.alpha = 0f;
+                    canvasGroupMenang.DOFade(1f, 0.8f);
+                }
+            }
+        }
+        else
+        {
+            if (panelKalah != null)
+            {
+                panelKalah.SetActive(true);
+
+                if (rectKalah != null)
+                {
+                    rectKalah.anchoredPosition = new Vector2(0, -1000f);
+                    rectKalah.DOAnchorPosY(0, 0.8f).SetEase(Ease.OutBack);
+                }
+
+                if (canvasGroupKalah != null)
+                {
+                    canvasGroupKalah.alpha = 0f;
+                    canvasGroupKalah.DOFade(1f, 0.8f);
+                }
+
+                // 👇 BARU: Animasi Segitiga Berkedip 👇
+                if (warningTriangleIcon != null)
+                {
+                    // Mulai dari terlihat jelas (Alpha = 1)
+                    warningTriangleIcon.alpha = 1f;
+
+                    // Fade ke agak transparan (Alpha = 0.2) dalam 0.3 detik
+                    warningTriangleIcon.DOFade(0.2f, 0.3f)
+                        .SetEase(Ease.InOutSine)
+                        .SetLoops(-1, LoopType.Yoyo) // Mengulang tanpa henti, mondar-mandir (Yoyo)
+                        .SetDelay(0.8f); // Baru mulai berkedip setelah panel selesai meluncur
+                }
+            }
+        }
     }
 }

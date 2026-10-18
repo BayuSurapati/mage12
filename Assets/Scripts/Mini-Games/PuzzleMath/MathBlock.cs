@@ -3,18 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.EventSystems;
-using Unity.VisualScripting;
+using DG.Tweening;
+using UnityEngine.UI; // WAJIB: Impor DOTween
 
 public class MathBlock : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     public MiniGame_PuzzleMath manager;
     public TextMeshProUGUI numberText;
 
-    [HideInInspector] public int blockValue; // Nilai blok matematika ini
-    [HideInInspector] public MathSlot currentSlot; // Slot saat ini tempat blok berada
+    [HideInInspector] public int blockValue;
+    [HideInInspector] public MathSlot currentSlot;
 
-    private Vector3 originalPosition; // Posisi asli blok sebelum di-drag
-    private RectTransform rectTransform; // Komponen RectTransform dari blok
+    private Vector3 originalPosition;
+    private RectTransform rectTransform;
     private Canvas canvas;
     private CanvasGroup canvasGroup;
 
@@ -24,57 +25,53 @@ public class MathBlock : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         canvasGroup = GetComponent<CanvasGroup>();
         canvas = GetComponentInParent<Canvas>();
 
-        if(canvasGroup == null)
-        {
+        if (canvasGroup == null)
             canvasGroup = gameObject.AddComponent<CanvasGroup>();
-        }
 
-        originalPosition = rectTransform.anchoredPosition; // Simpan posisi asli saat Awake
+        originalPosition = rectTransform.anchoredPosition;
     }
 
     public void SetupBlock(int value)
     {
         blockValue = value;
         numberText.text = value.ToString();
-        //originalPosition = rectTransform.anchoredPosition; // Simpan posisi asli saat setup
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if(!manager.isGameActive)
-        {
-            return;
-        }
+        if (!manager.isGameActive) return;
 
-        transform.SetAsLastSibling(); // Bawa blok ke depan saat di-drag
-        canvasGroup.alpha = 0.6f; // Buat blok sedikit transparan saat di-drag
-        canvasGroup.blocksRaycasts = false; // Nonaktifkan raycast agar blok bisa dilewati pointer
+        transform.SetAsLastSibling();
 
-        if(currentSlot != null)
+        // Hentikan animasi yang mungkin sedang berjalan
+        DOTween.Kill(rectTransform);
+
+        // Buat balok membesar sedikit saat digenggam
+        rectTransform.DOScale(Vector3.one * 1.1f, 0.1f);
+        canvasGroup.alpha = 0.6f;
+        canvasGroup.blocksRaycasts = false;
+
+        if (currentSlot != null)
         {
-            currentSlot.currenBlock = null; // Lepaskan blok dari slot saat ini
+            currentSlot.currenBlock = null;
             currentSlot = null;
         }
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        if(!manager.isGameActive)
-        {
-            return;
-        }
-
-        rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor; // Update posisi blok saat di-drag
+        if (!manager.isGameActive) return;
+        rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if(!manager.isGameActive)
-        {
-            return;
-        }
-        canvasGroup.alpha = 1f; // Kembalikan transparansi blok
-        canvasGroup.blocksRaycasts = true; // Aktifkan kembali raycast
+        if (!manager.isGameActive) return;
+
+        // Kembalikan ukuran balok
+        rectTransform.DOScale(Vector3.one, 0.1f);
+        canvasGroup.alpha = 1f;
+        canvasGroup.blocksRaycasts = true;
 
         GameObject objekDibawah = eventData.pointerCurrentRaycast.gameObject;
 
@@ -82,28 +79,41 @@ public class MathBlock : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         {
             MathSlot slot = objekDibawah.GetComponent<MathSlot>();
 
-            if(slot != null && slot.currenBlock == null)
+            if (slot != null && slot.currenBlock == null)
             {
-                // Jika slot valid dan kosong, tempatkan blok di slot tersebut
-                rectTransform.position = slot.transform.position;
+                // Menganimasikan perpindahan balok ke slot seperti ditarik magnet
+                rectTransform.DOMove(slot.transform.position, 0.2f).SetEase(Ease.OutBack);
                 currentSlot = slot;
                 slot.currenBlock = this;
 
-                manager.CheckWinCondition(); // Periksa kondisi kemenangan setelah menempatkan blok
+                manager.CheckWinCondition();
                 return;
             }
         }
-        SnapBack(); // Kembalikan blok ke posisi asli jika tidak ditempatkan di slot yang valid
+        SnapBack();
     }
 
     public void SnapBack()
     {
-        rectTransform.anchoredPosition = originalPosition; // Kembalikan blok ke posisi asli
-        if(currentSlot != null)
+        // Animasi kembali mulus ke tempat asal
+        rectTransform.DOAnchorPos(originalPosition, 0.3f).SetEase(Ease.OutBack);
+
+        if (currentSlot != null)
         {
-            currentSlot.currenBlock = null; // Lepaskan blok dari slot saat ini
+            currentSlot.currenBlock = null;
             currentSlot = null;
         }
     }
 
+    // Fungsi baru untuk dipanggil GameManager saat jawaban salah (efek warna merah sejenak)
+    public void SnapBackError()
+    {
+        Image blockImage = GetComponent<Image>();
+        if (blockImage != null)
+        {
+            Color origColor = blockImage.color;
+            blockImage.DOColor(Color.red, 0.2f).SetLoops(2, LoopType.Yoyo).OnComplete(() => blockImage.color = origColor);
+        }
+        SnapBack();
+    }
 }
