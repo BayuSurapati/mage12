@@ -17,22 +17,22 @@ MonoBehaviour:
   gambarKarakter: {fileID: 21300000, guid: 9fb535c6d605ede45aa7fc40e8c27112, type: 3}
   narasiCerita: Antisipasi Bencana PAK!
   isMiniGameCard: 1
-  efekKiriBencana: -10
+  efekKiriBencana: 0
   efekKiriEkosistem: 0
   efekKiriKeuangan: 0
-  efekKiriTeknologi: -10
-  efekKananBencana: 5
-  efekKananEkosistem: 5
+  efekKiriTeknologi: 0
+  efekKananBencana: 0
+  efekKananEkosistem: 0
   efekKananKeuangan: 0
   efekKananTeknologi: 0
-  efekWinBencana: 25
+  efekWinBencana: 15
   efekWinEkosistem: 0
   efekWinKeuangan: 0
   efekWinTeknologi: 0
-  efekLoseBencana: 0
+  efekLoseBencana: -20
   efekLoseEkosistem: 0
   efekLoseKeuangan: 0
-  efekLoseTeknologi: -25
+  efekLoseTeknologi: 0
   teksGeserKiri: Mainkan...
   teksGeserKanan: Mainkan...
   introMiniGame: Mitigasi Bencana

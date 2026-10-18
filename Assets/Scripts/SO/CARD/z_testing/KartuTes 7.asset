@@ -17,20 +17,20 @@ MonoBehaviour:
   gambarKarakter: {fileID: 21300000, guid: 091f4703f4531ad4db3f95e1c952d228, type: 3}
   narasiCerita: Tolong Bersihkan Sampah PAK!
   isMiniGameCard: 1
-  efekKiriBencana: -10
+  efekKiriBencana: 0
   efekKiriEkosistem: 0
   efekKiriKeuangan: 0
-  efekKiriTeknologi: -10
-  efekKananBencana: 5
-  efekKananEkosistem: 5
+  efekKiriTeknologi: 0
+  efekKananBencana: 0
+  efekKananEkosistem: 0
   efekKananKeuangan: 0
   efekKananTeknologi: 0
   efekWinBencana: 0
-  efekWinEkosistem: 0
+  efekWinEkosistem: 15
   efekWinKeuangan: 0
   efekWinTeknologi: 0
   efekLoseBencana: 0
-  efekLoseEkosistem: 0
+  efekLoseEkosistem: -20
   efekLoseKeuangan: 0
   efekLoseTeknologi: 0
   teksGeserKiri: Mainkan...

@@ -27,11 +27,11 @@ MonoBehaviour:
   efekKananTeknologi: 0
   efekWinBencana: 0
   efekWinEkosistem: 0
-  efekWinKeuangan: 0
+  efekWinKeuangan: 15
   efekWinTeknologi: 0
   efekLoseBencana: 0
   efekLoseEkosistem: 0
-  efekLoseKeuangan: 0
+  efekLoseKeuangan: -20
   efekLoseTeknologi: 0
   teksGeserKiri: Mainkan...
   teksGeserKanan: Mainkan...

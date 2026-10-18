@@ -17,10 +17,10 @@ MonoBehaviour:
   gambarKarakter: {fileID: 21300000, guid: 9fb535c6d605ede45aa7fc40e8c27112, type: 3}
   narasiCerita: Kuatkan Keamanan Cyber Daerah PAK!
   isMiniGameCard: 1
-  efekKiriBencana: -10
+  efekKiriBencana: 0
   efekKiriEkosistem: 0
   efekKiriKeuangan: 0
-  efekKiriTeknologi: -10
+  efekKiriTeknologi: 0
   efekKananBencana: 5
   efekKananEkosistem: 5
   efekKananKeuangan: 0
