@@ -2,6 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum TipeKarakter
+{
+    Pejabat,
+    Petani,
+    Nelayan,
+    PekerjaKasar,
+    PekerjaKantoran,
+    PNS
+}
+
 [CreateAssetMenu(fileName = "KartuBaru", menuName = "Data Kartu")]
 public class CardData : ScriptableObject
 {
@@ -10,6 +20,10 @@ public class CardData : ScriptableObject
     public string Subjek;
     [Tooltip("Gambar karakter yang akan muncul di kartu")]
     public Sprite gambarKarakter;
+
+    // 👇 Variabel BARU yang ditambahkan 👇
+    [Tooltip("Pilih tipe karakter untuk menentukan suara gumamannya")]
+    public TipeKarakter karakterSuara;
 
 
     [TextArea(3, 5)]
@@ -52,4 +66,6 @@ public class CardData : ScriptableObject
 
     [TextArea(3, 5)]
     public string deskripsiMiniGame;
+
+
 }

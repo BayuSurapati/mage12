@@ -102,6 +102,7 @@ public class MiniGame_CyberAttack : MonoBehaviour
 
     private void OnPopupClickedAnimated(GameObject popup)
     {
+        AudioManager.Instance.MainkanSFX("Popp");
         if (!isGameActive) return;
 
         popup.GetComponent<Button>().interactable = false;

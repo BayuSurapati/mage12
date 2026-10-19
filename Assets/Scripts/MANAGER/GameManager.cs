@@ -9,9 +9,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     [Header("Database Kartu")]
-    [Tooltip("Masukkan semua file ScriptableObject Kartu Biasa ke sini")]
     public List<CardData> allNormalCards;
-    [Tooltip("Masukkan semua file ScriptableObject Kartu Mini-Game ke sini")]
     public List<CardData> allMiniGameCards;
 
     [Header("Data sesi saat ini")]
@@ -38,20 +36,18 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI teksAkibatEnding;
 
     [Header("Visual 9 Ending (Opsional)")]
-    [Tooltip("Masukkan 9 GameObject/Gambar background ending berurutan (1-9)")]
-    public GameObject[] visualEnding; // Array untuk memunculkan 9 gambar berbeda
+    public GameObject[] visualEnding;
 
-    // Variabel delay sebelum kembali ke Main Menu otomatis
     private float delaySebelumReset = 5f;
 
     void Start()
     {
         if (panelEnding != null) panelEnding.SetActive(false);
 
-        if (statsManager != null)
-        {
-            statsManager.ResetStats();
-        }
+        if (statsManager != null) statsManager.ResetStats();
+
+        AudioManager.Instance.MainkanBGM("Gameplay.mpeg");
+
         GenerateSessionDeck();
         currentMonth = 1;
         UpdateTurnDisplay();
@@ -59,10 +55,7 @@ public class GameManager : MonoBehaviour
         DrawCard();
     }
 
-    void Update()
-    {
-
-    }
+    void Update() { }
 
     private void GenerateSessionDeck()
     {
@@ -98,7 +91,6 @@ public class GameManager : MonoBehaviour
         }
 
         currentSessionDeck = selectedDeck;
-        Debug.Log($"Sesi Baru Dimulai! Total Kartu di Deck: {currentSessionDeck.Count}");
     }
 
     public void ProcessDecision(bool isRightChoice, CardData playedCard)
@@ -115,14 +107,11 @@ public class GameManager : MonoBehaviour
 
         if (statsManager.isGameOver())
         {
-            Debug.Log("Permainan Selesai! Pemain Kalah!");
-
-            // Ambil ID tipe kekalahan dinamis dari StatsManager
             int tipeEndingKalah = statsManager.DapatkanTipeKekalahan();
-
             if (cardSwipeScript != null) cardSwipeScript.gameObject.SetActive(false);
-
+            
             TampilkanEnding(tipeEndingKalah);
+            AudioManager.Instance.MainkanSFX("Loseee");
             return;
         }
 
@@ -133,11 +122,9 @@ public class GameManager : MonoBehaviour
     {
         if (currentMonth > MAX_MONTHS)
         {
-            Debug.Log("Permainan Selesai! Pemain Bertahan 30 Bulan!");
             if (cardSwipeScript != null) cardSwipeScript.gameObject.SetActive(false);
-
-            // Panggil Ending Kemenangan
             TampilkanEnding(9);
+            AudioManager.Instance.MainkanSFX("Winn");
             return;
         }
 
@@ -145,12 +132,22 @@ public class GameManager : MonoBehaviour
         {
             CardData nextCard = currentSessionDeck[0];
             currentSessionDeck.RemoveAt(0);
-            Debug.Log($"[CEK KARTU] Di tangan: {nextCard.cardID}");
 
             cardSwipeScript.gameObject.SetActive(true);
             cardSwipeScript.activeCard = nextCard;
             cardSwipeScript.UpdateCardDisplay();
-            cardSwipeScript.ResetCardPosition();
+
+            // 👇 PERBAIKAN LOGIKA REIGNS 👇
+            if (currentMonth == 1)
+            {
+                // Hanya dieksekusi 1x saat baru mulai: Animasi dibagikan dari luar layar
+                cardSwipeScript.AnimateCardEntrance();
+            }
+            else
+            {
+                // Untuk bulan ke 2-30: Kartu langsung pop-up dari tengah layar
+                cardSwipeScript.InstantResetForNextCard();
+            }
         }
     }
 
@@ -182,7 +179,7 @@ public class GameManager : MonoBehaviour
     {
         if (monthTextUI != null)
         {
-            monthTextUI.text = "Day-" + currentMonth.ToString();
+            monthTextUI.text = "Bulan-" + currentMonth.ToString();
             monthTextUI.transform.DOScale(1.2f, 0.2f).SetEase(Ease.OutBack).OnComplete(() =>
             {
                 monthTextUI.transform.DOScale(1f, 0.2f);
@@ -190,24 +187,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // ==========================================
-    // SISTEM ANIMASI PANEL ENDING OTOMATIS KELUAR
-    // ==========================================
     public void TampilkanEnding(int tipeEnding)
     {
-        // Tetap gunakan fungsi SetupTeksEnding milik Anda!
         SetupTeksEnding(tipeEnding);
+        AudioManager.Instance.HentikanBGM();
 
-        // Menyalakan visual/gambar yang tepat untuk ending tersebut
         if (visualEnding != null && visualEnding.Length > 0)
         {
-            // Matikan semua gambar ilustrasi terlebih dahulu
             for (int i = 0; i < visualEnding.Length; i++)
             {
                 if (visualEnding[i] != null) visualEnding[i].SetActive(false);
             }
 
-            // Nyalakan HANYA gambar yang sesuai dengan tipe ending
             int indeksVisual = tipeEnding - 1;
             if (indeksVisual >= 0 && indeksVisual < visualEnding.Length)
             {
@@ -219,7 +210,6 @@ public class GameManager : MonoBehaviour
         if (panelEnding != null)
         {
             panelEnding.SetActive(true);
-
             if (rectPanelEnding != null) rectPanelEnding.localScale = Vector3.zero;
 
             if (canvasGroupEnding != null)
@@ -230,15 +220,11 @@ public class GameManager : MonoBehaviour
 
             if (rectPanelEnding != null)
             {
-                // Animasi membal masuk
                 rectPanelEnding.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBack).SetDelay(0.3f);
-
-                // Animasi mengecil dan pudar sebelum reset otomatis
                 rectPanelEnding.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InBack).SetDelay(delaySebelumReset - 0.5f);
                 if (canvasGroupEnding != null) canvasGroupEnding.DOFade(0f, 0.5f).SetDelay(delaySebelumReset - 0.5f);
             }
 
-            // Lakukan reset otomatis ke Main Menu
             DOVirtual.DelayedCall(delaySebelumReset, () =>
             {
                 SceneManager.LoadScene("MainMenu");

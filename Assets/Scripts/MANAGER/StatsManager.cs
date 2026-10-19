@@ -103,6 +103,7 @@ public class StatsManager : MonoBehaviour
     public int DapatkanTipeKekalahan()
     {
         if (statBencana <= 0) return 1;
+
         if (statBencana >= 100) return 2;
 
         if (statEkosistem <= 0) return 3;

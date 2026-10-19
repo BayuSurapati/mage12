@@ -15,6 +15,7 @@ MonoBehaviour:
   cardID: BNC-06
   Subjek: Pekerja Kantoran
   gambarKarakter: {fileID: 21300000, guid: 0e7ce9698df077848b3f2b00fbf855f6, type: 3}
+  karakterSuara: 4
   narasiCerita: Asap kebakaran lahan mulai masuk ke kota. Bagikan masker gratis?
   isMiniGameCard: 0
   efekKiriBencana: -10

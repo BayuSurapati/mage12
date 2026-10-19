@@ -86,20 +86,32 @@ public class MiniGameManager : MonoBehaviour
     // 👇 FUNGSI BARU UNTUK MENUTUP PANEL & LANJUT BULAN 👇
     public void LanjutKeBulanBerikutnya()
     {
-        // 1. Matikan semua panel mini-game dari layar (Ini yang membuat panel tertutup)
+        // 1. Matikan semua panel mini-game dari layar
         if (cyberAttackGame != null) cyberAttackGame.gameObject.SetActive(false);
         if (mitigasiBencanaGame != null) mitigasiBencanaGame.gameObject.SetActive(false);
         if (sampahGame != null) sampahGame.gameObject.SetActive(false);
         if (demoMassalGame != null) demoMassalGame.gameObject.SetActive(false);
         if (puzzleMathGame != null) puzzleMathGame.gameObject.SetActive(false);
 
-        // 2. Buka kunci kartu
-        cardSwipeScript.enabled = true;
-
-        // 3. Maju ke bulan berikutnya
-        if (!statsManager.isGameOver())
+        // 2. Cek apakah pemain kalah akibat efek pengurangan poin dari mini-game
+        if (statsManager.isGameOver())
         {
-            gameManager.AdvanceMonth();
+            // JIKA KALAH: Hentikan permainan dan panggil layar ending!
+            int tipeEndingKalah = statsManager.DapatkanTipeKekalahan();
+            
+
+            // Kita matikan interaksi kartu agar aman
+            cardSwipeScript.enabled = false;
+
+            // Panggil layar ending dari GameManager
+            gameManager.TampilkanEnding(tipeEndingKalah);
+            AudioManager.Instance.MainkanSFX("Loseee");
+        }
+        else
+        {
+            // JIKA AMAN (TIDAK KALAH): Lanjut bermain seperti biasa
+            cardSwipeScript.enabled = true; // Buka kembali kunci kartu
+            gameManager.AdvanceMonth();     // Panggil bulan berikutnya (dan kartu baru)
         }
     }
 }

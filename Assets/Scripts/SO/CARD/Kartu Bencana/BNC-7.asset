@@ -15,6 +15,7 @@ MonoBehaviour:
   cardID: BNC-07
   Subjek: Petani
   gambarKarakter: {fileID: 21300000, guid: 9f6aee4467a5997449d0fdc74d443d85, type: 3}
+  karakterSuara: 1
   narasiCerita: Hama serangga aneh menyerang ladang setelah badai. Minta bantuan
     pestisida!
   isMiniGameCard: 0

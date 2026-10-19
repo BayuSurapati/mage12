@@ -41,6 +41,7 @@ public class MiniGame_IntroUI : MonoBehaviour
     {
         gameObject.SetActive(false);
         miniGameManager.StartMiniGame();
+        AudioManager.Instance.MainkanSFX("Clickkk");
     }
 
     private IEnumerator AnimatePopUp(Vector3 startScale, Vector3 endScale)

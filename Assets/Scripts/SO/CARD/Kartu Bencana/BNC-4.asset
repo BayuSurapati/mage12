@@ -15,6 +15,7 @@ MonoBehaviour:
   cardID: BNC-04
   Subjek: Pekerja Kasar
   gambarKarakter: {fileID: 21300000, guid: 8d03520b7339cd043bb2f9820eef5a94, type: 3}
+  karakterSuara: 3
   narasiCerita: Tebing dekat proyek galian rawan longsor. Hentikan proyek?
   isMiniGameCard: 0
   efekKiriBencana: -15

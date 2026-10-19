@@ -4,33 +4,27 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using Unity.Properties;
+using DG.Tweening;
 
 public class CardSwipe : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
     [Header("Data Kartu saat ini")]
-    [Tooltip("Data ini nantinya akan diisi otomatis oleh Game Manager")]
     public CardData activeCard;
 
     [Header("Referensi UI Teks")]
-    [Tooltip("Masukkan objek CardNarrative Teks kesini")]
     public TextMeshProUGUI narrativeTextUI;
 
     [Header("Referensi Modul Lain")]
     public GameManager gameManager;
 
     [Header("Pengaturan Geser")]
-    public float swipeThreshold = 150f; // Jarak untuk mengeksekusi pilihan (Setuju/Tolak)
-    public float telegraphThreshold = 50f; // Jarak untuk memunculkan Sinyal UI (Mengintip)
-    [Tooltip("Kecepatan kartu terlempar keluar setelah dilepas")]
+    public float swipeThreshold = 150f;
+    public float telegraphThreshold = 50f;
     public float throwSpeed = 2500f;
 
     [Header("Pengaturan Visual Sinyal (Ukuran)")]
-    [Tooltip("Skala ukuran titik paling kecil (untuk efek mendekati 0)")]
     public float minDotScale = 0.5f;
-    [Tooltip("Skala ukuran titik paling besar (untuk efek maksimal)")]
     public float maxDotScale = 1.8f;
-    [Tooltip("Nilai maksimal efek kartu biasa sebagai acuan pembagi")]
     public float maxEffectValue = 15f;
 
     [Header("Referensi UI Sinyal")]
@@ -43,27 +37,17 @@ public class CardSwipe : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
     public TextMeshProUGUI teksPilihanKiri;
     public TextMeshProUGUI teksPilihanKanan;
 
-    [Tooltip("Masukkan komponen UI Image karakter di sini")]
     public Image imageKarakterUI;
 
     private Vector2 defaultPosition;
     private RectTransform rectTransform;
-
     private bool isAnimating = false;
 
-    // Start is called before the first frame update
     void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
         defaultPosition = rectTransform.anchoredPosition;
         HideAllSignals();
-        //UpdateCardDisplay();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -73,9 +57,6 @@ public class CardSwipe : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
 
     public void UpdateCardDisplay()
     {
-        Debug.Log($"teksPilihanKiri: {teksPilihanKiri}");  // Akan keluar "None" jika null
-        Debug.Log($"teksPilihanKanan: {teksPilihanKanan}");  // Akan keluar "None" jika null
-
         if (activeCard != null && narrativeTextUI != null)
         {
             narrativeTextUI.text = activeCard.narasiCerita;
@@ -83,29 +64,13 @@ public class CardSwipe : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
             if (teksPilihanKiri != null)
             {
                 teksPilihanKiri.text = activeCard.teksGeserKiri;
-                Debug.Log($"teksPilihanKiri text: {teksPilihanKiri.text}");
-                Debug.Log($"teksPilihanKiri enabled: {teksPilihanKiri.enabled}");
-                Debug.Log($"teksPilihanKiri gameObject active: {teksPilihanKiri.gameObject.activeInHierarchy}");
                 SetTextAlpha(teksPilihanKiri, 1f);
             }
-            else
-            {
-                Debug.LogError("teksPilihanKiri adalah NULL!");
-            }
-
             if (teksPilihanKanan != null)
             {
                 teksPilihanKanan.text = activeCard.teksGeserKanan;
-                Debug.Log($"teksPilihanKanan text: {teksPilihanKanan.text}");
-                Debug.Log($"teksPilihanKanan enabled: {teksPilihanKanan.enabled}");
-                Debug.Log($"teksPilihanKanan gameObject active: {teksPilihanKanan.gameObject.activeInHierarchy}");
                 SetTextAlpha(teksPilihanKanan, 1f);
             }
-            else
-            {
-                Debug.LogError("teksPilihanKanan adalah NULL!");
-            }
-
             if (imageKarakterUI != null && activeCard.gambarKarakter != null)
             {
                 imageKarakterUI.sprite = activeCard.gambarKarakter;
@@ -114,6 +79,79 @@ public class CardSwipe : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
             SetTextAlpha(teksPilihanKiri, 0f);
             SetTextAlpha(teksPilihanKanan, 0f);
         }
+    }
+
+    // ==========================================
+    // 1. ANIMASI HANYA UNTUK KARTU PERTAMA KALI
+    // ==========================================
+    public void AnimateCardEntrance()
+    {
+        isAnimating = true;
+        HideAllSignals();
+        SetTextAlpha(teksPilihanKiri, 0f);
+        SetTextAlpha(teksPilihanKanan, 0f);
+
+        // Siapkan suara acak dan mainkan DENGAN DELAY 0.5 detik
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.SiapkanSuaraKarakterBaru();
+            AudioManager.Instance.MulaiBergumamDenganDelay();
+        }
+
+        rectTransform.anchoredPosition = new Vector2(0, 1500f);
+        rectTransform.rotation = Quaternion.Euler(0, 0, Random.Range(-15f, 15f));
+        rectTransform.localScale = Vector3.one;
+
+        rectTransform.DOAnchorPos(defaultPosition, 0.8f).SetEase(Ease.OutQuart);
+        rectTransform.DORotate(Vector3.zero, 0.8f).OnComplete(() =>
+        {
+            isAnimating = false;
+        });
+    }
+
+    // ==========================================
+    // 2. MUNCULKAN KARTU UNTUK BULAN KE-2 DST.
+    // ==========================================
+    public void InstantResetForNextCard()
+    {
+        isAnimating = true;
+        HideAllSignals();
+        SetTextAlpha(teksPilihanKiri, 0f);
+        SetTextAlpha(teksPilihanKanan, 0f);
+
+        // Siapkan suara acak baru dan mainkan DENGAN DELAY 0.5 detik
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.SiapkanSuaraKarakterBaru();
+            AudioManager.Instance.MulaiBergumamDenganDelay();
+        }
+
+        rectTransform.anchoredPosition = defaultPosition;
+        rectTransform.rotation = Quaternion.identity;
+        rectTransform.localScale = Vector3.zero;
+
+        rectTransform.DOScale(Vector3.one, 0.3f).SetEase(Ease.OutBack).OnComplete(() =>
+        {
+            isAnimating = false;
+        });
+    }
+
+    // ==========================================
+    // 3. KARTU TIDAK JADI DIGESER (SNAP BACK)
+    // ==========================================
+    public void ResetCardPosition()
+    {
+        AudioManager.Instance.MainkanSFX("Popp");
+        isAnimating = true;
+        HideAllSignals();
+        SetTextAlpha(teksPilihanKiri, 0f);
+        SetTextAlpha(teksPilihanKanan, 0f);
+
+        rectTransform.DOAnchorPos(defaultPosition, 0.3f).SetEase(Ease.OutBack);
+        rectTransform.DORotate(Vector3.zero, 0.3f).OnComplete(() =>
+        {
+            isAnimating = false;
+        });
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -126,28 +164,30 @@ public class CardSwipe : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
         rectTransform.rotation = Quaternion.Euler(0, 0, rotationAngle);
 
         float dragDistanceX = rectTransform.anchoredPosition.x - defaultPosition.x;
-        // Debug.Log($"dragDistanceX: {dragDistanceX}"); // Matikan debug jarak agar konsol tidak berisik
 
         UpdateTelegraphing(dragDistanceX);
 
-        // Jika jarak geser lebih dari 10 pixel, baru mulai menampilkan teks pilihan
         float fadeRatio = Mathf.Clamp01(Mathf.Abs(dragDistanceX) / swipeThreshold);
 
-        if (dragDistanceX > 10f) // Tarik ke Kanan
+        if (dragDistanceX > 10f || dragDistanceX < -10f)
         {
-            SetTextAlpha(teksPilihanKanan, fadeRatio);
-            SetTextAlpha(teksPilihanKiri, 0f);
+            if (dragDistanceX > 10f)
+            {
+                SetTextAlpha(teksPilihanKanan, fadeRatio);
+                SetTextAlpha(teksPilihanKiri, 0f);
+            }
+            else
+            {
+                SetTextAlpha(teksPilihanKiri, fadeRatio);
+                SetTextAlpha(teksPilihanKanan, 0f);
+            }
+            // Suara tidak lagi dipanggil di sini!
         }
-        else if (dragDistanceX < -10f) // Tarik ke Kiri
-        {
-            SetTextAlpha(teksPilihanKiri, fadeRatio);
-            SetTextAlpha(teksPilihanKanan, 0f);
-        }
-        else // Di area netral tengah
+        else
         {
             SetTextAlpha(teksPilihanKiri, 0f);
             SetTextAlpha(teksPilihanKanan, 0f);
-            HideAllSignals(); // Pastikan sinyal mati saat di tengah
+            HideAllSignals();
         }
     }
 
@@ -155,16 +195,16 @@ public class CardSwipe : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
     {
         if (isAnimating) return;
 
+        AudioManager.Instance.MainkanSFX("Whoosh");
+
         float dragDistanceX = rectTransform.anchoredPosition.x - defaultPosition.x;
 
         if (dragDistanceX > swipeThreshold)
         {
-            Debug.Log("Swipe Kanan Valid: Pilihan Setuju!");
             StartCoroutine(ThrowCardOffScreen(true));
         }
         else if (dragDistanceX < -swipeThreshold)
         {
-            Debug.Log("Swipe Kiri Valid: Pilihan Tolak!");
             StartCoroutine(ThrowCardOffScreen(false));
         }
         else
@@ -178,18 +218,22 @@ public class CardSwipe : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
         isAnimating = true;
         HideAllSignals();
 
-        // 1. Tentukan titik target di luar layar
+        if (AudioManager.Instance != null)
+        {
+            // Matikan suara gumaman jika kebetulan pemain melempar kartu sangat cepat
+            AudioManager.Instance.HentikanBergumam();
+            AudioManager.Instance.MainkanSuaraKertas();
+        }
+
         float targetOffScreenX = toRight ? Screen.width + 1000f : -Screen.width - 1000f;
         Vector2 targetPosition = new Vector2(targetOffScreenX, rectTransform.anchoredPosition.y);
 
-        // 2. Lakukan pergerakan bertahap (frame by frame)
         while (Vector2.Distance(rectTransform.anchoredPosition, targetPosition) > 10f)
         {
             rectTransform.anchoredPosition = Vector2.MoveTowards(rectTransform.anchoredPosition, targetPosition, throwSpeed * Time.deltaTime);
             yield return null;
         }
 
-        // 3. Setelah kartu benar-benar hilang dari layar:
         if (gameManager != null)
         {
             gameManager.ProcessDecision(toRight, activeCard);
@@ -198,53 +242,33 @@ public class CardSwipe : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
 
     private void UpdateTelegraphing(float dragDistanceX)
     {
-        HideAllSignals(); // Matikan dulu semuanya sebelum dicek ulang
+        HideAllSignals();
 
-        if (activeCard == null)
-        {
-            return;
-        }
+        if (activeCard == null) return;
 
-        if (dragDistanceX > telegraphThreshold) // GESER KANAN
+        if (dragDistanceX > telegraphThreshold)
         {
             if (activeCard.efekKananBencana != 0) ActivateAndScaleSignal(sinyalBencana, activeCard.efekKananBencana);
             if (activeCard.efekKananEkosistem != 0) ActivateAndScaleSignal(sinyalEkosistem, activeCard.efekKananEkosistem);
-
-            // 👇 SOLUSI BUG: Baris ini sebelumnya terlewat di skrip Anda 👇
             if (activeCard.efekKananKeuangan != 0) ActivateAndScaleSignal(sinyalKeuangan, activeCard.efekKananKeuangan);
-
             if (activeCard.efekKananTeknologi != 0) ActivateAndScaleSignal(sinyalTeknologi, activeCard.efekKananTeknologi);
         }
-        else if (dragDistanceX < -telegraphThreshold) // GESER KIRI
+        else if (dragDistanceX < -telegraphThreshold)
         {
             if (activeCard.efekKiriBencana != 0) ActivateAndScaleSignal(sinyalBencana, activeCard.efekKiriBencana);
             if (activeCard.efekKiriEkosistem != 0) ActivateAndScaleSignal(sinyalEkosistem, activeCard.efekKiriEkosistem);
-
-            // 👇 SOLUSI BUG: Baris ini juga terlewat di skrip Anda 👇
             if (activeCard.efekKiriKeuangan != 0) ActivateAndScaleSignal(sinyalKeuangan, activeCard.efekKiriKeuangan);
-
             if (activeCard.efekKiriTeknologi != 0) ActivateAndScaleSignal(sinyalTeknologi, activeCard.efekKiriTeknologi);
         }
     }
 
-    // --- FUNGSI BARU: Menyalakan Sinyal Sekaligus Mengubah Ukurannya ---
     private void ActivateAndScaleSignal(GameObject signal, int effectValue)
     {
         if (signal == null) return;
-
-        // 1. Nyalakan objek sinyal
         signal.SetActive(true);
-
-        // 2. Dapatkan nilai absolut dari efek (karena minus atau plus sama-sama dihitung "besar")
         float absValue = Mathf.Abs(effectValue);
-
-        // 3. Batasi nilai maksimal agar tidak melebihi batas (untuk antisipasi nilai mini-game yang mencapai 25)
         absValue = Mathf.Clamp(absValue, 0, maxEffectValue);
-
-        // 4. Hitung skala menggunakan Lerp
         float calculatedScale = Mathf.Lerp(minDotScale, maxDotScale, absValue / maxEffectValue);
-
-        // 5. Terapkan skala ke komponen RectTransform UI
         signal.GetComponent<RectTransform>().localScale = new Vector3(calculatedScale, calculatedScale, 1f);
     }
 
@@ -255,29 +279,6 @@ public class CardSwipe : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
             Color c = textUI.color;
             c.a = alpha;
             textUI.color = c;
-        }
-    }
-
-    public void ResetCardPosition()
-    {
-        rectTransform.anchoredPosition = defaultPosition;
-        rectTransform.rotation = Quaternion.identity;
-        isAnimating = false;
-        HideAllSignals();
-
-        SetTextAlpha(teksPilihanKiri, 0f);
-        SetTextAlpha(teksPilihanKanan, 0f);
-    }
-
-    private void ShowSignals(GameObject[] signalsToActivate)
-    {
-        HideAllSignals();
-        foreach (GameObject signal in signalsToActivate)
-        {
-            if (signal != null)
-            {
-                signal.SetActive(true);
-            }
         }
     }
 
