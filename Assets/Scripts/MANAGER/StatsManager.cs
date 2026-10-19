@@ -6,7 +6,7 @@ public class StatsManager : MonoBehaviour
 {
     [Header("Indikator Daerah (0-100)")]
     public int statBencana = 50;
-    public int statEkosistem  = 50;
+    public int statEkosistem = 50;
     public int statKeuangan = 50;
     public int statTeknologi = 50;
 
@@ -15,13 +15,13 @@ public class StatsManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void ResetStats()
@@ -31,7 +31,7 @@ public class StatsManager : MonoBehaviour
         statKeuangan = 50;
         statTeknologi = 50;
 
-        if(uiManager != null)
+        if (uiManager != null)
         {
             uiManager.UpdateProgressBars();
         }
@@ -56,7 +56,7 @@ public class StatsManager : MonoBehaviour
 
         ClampStats();
 
-        if(uiManager != null)
+        if (uiManager != null)
         {
             uiManager.UpdateProgressBars();
         }
@@ -95,5 +95,25 @@ public class StatsManager : MonoBehaviour
                statEkosistem <= 0 || statEkosistem >= 100 ||
                statKeuangan <= 0 || statKeuangan >= 100 ||
                statTeknologi <= 0 || statTeknologi >= 100;
+    }
+
+    // ==========================================
+    // FUNGSI BARU UNTUK MENGECEK TIPE ENDING
+    // ==========================================
+    public int DapatkanTipeKekalahan()
+    {
+        if (statBencana <= 0) return 1;
+        if (statBencana >= 100) return 2;
+
+        if (statEkosistem <= 0) return 3;
+        if (statEkosistem >= 100) return 4;
+
+        if (statKeuangan <= 0) return 5;
+        if (statKeuangan >= 100) return 6;
+
+        if (statTeknologi <= 0) return 7;
+        if (statTeknologi >= 100) return 8;
+
+        return 0; // Mengembalikan 0 jika tidak ada stat yang berada pada batas game over
     }
 }

@@ -63,7 +63,7 @@ public class CardSwipe : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -123,25 +123,23 @@ public class CardSwipe : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
         rectTransform.anchoredPosition += eventData.delta;
 
         float rotationAngle = rectTransform.anchoredPosition.x * -0.05f;
-        rectTransform.rotation = Quaternion.Euler(0,0, rotationAngle);
+        rectTransform.rotation = Quaternion.Euler(0, 0, rotationAngle);
 
         float dragDistanceX = rectTransform.anchoredPosition.x - defaultPosition.x;
-        Debug.Log($"dragDistanceX: {dragDistanceX}"); // Debug
+        // Debug.Log($"dragDistanceX: {dragDistanceX}"); // Matikan debug jarak agar konsol tidak berisik
+
         UpdateTelegraphing(dragDistanceX);
 
-        //Jika jarak geser lebih dari 10 pixel, baru mulai menampilkan teks pilihan
+        // Jika jarak geser lebih dari 10 pixel, baru mulai menampilkan teks pilihan
         float fadeRatio = Mathf.Clamp01(Mathf.Abs(dragDistanceX) / swipeThreshold);
-        Debug.Log($"fadeRatio: {fadeRatio}"); // Debug
 
         if (dragDistanceX > 10f) // Tarik ke Kanan
         {
-            Debug.Log($"Setting right text alpha to: {fadeRatio}"); // Debug
             SetTextAlpha(teksPilihanKanan, fadeRatio);
             SetTextAlpha(teksPilihanKiri, 0f);
         }
         else if (dragDistanceX < -10f) // Tarik ke Kiri
         {
-            Debug.Log($"Setting left text alpha to: {fadeRatio}"); // Debug
             SetTextAlpha(teksPilihanKiri, fadeRatio);
             SetTextAlpha(teksPilihanKanan, 0f);
         }
@@ -149,6 +147,7 @@ public class CardSwipe : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
         {
             SetTextAlpha(teksPilihanKiri, 0f);
             SetTextAlpha(teksPilihanKanan, 0f);
+            HideAllSignals(); // Pastikan sinyal mati saat di tengah
         }
     }
 
@@ -157,9 +156,8 @@ public class CardSwipe : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
         if (isAnimating) return;
 
         float dragDistanceX = rectTransform.anchoredPosition.x - defaultPosition.x;
-        //bool hasMadeChoice = false;
 
-        if(dragDistanceX > swipeThreshold)
+        if (dragDistanceX > swipeThreshold)
         {
             Debug.Log("Swipe Kanan Valid: Pilihan Setuju!");
             StartCoroutine(ThrowCardOffScreen(true));
@@ -181,12 +179,10 @@ public class CardSwipe : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
         HideAllSignals();
 
         // 1. Tentukan titik target di luar layar
-        // Jika toRight = true, targetnya jauh di sebelah kanan layar. Jika false, sebelah kiri.
-        float targetOffScreenX = toRight ? Screen.width + 1000f : -Screen.width -1000f;
+        float targetOffScreenX = toRight ? Screen.width + 1000f : -Screen.width - 1000f;
         Vector2 targetPosition = new Vector2(targetOffScreenX, rectTransform.anchoredPosition.y);
 
         // 2. Lakukan pergerakan bertahap (frame by frame)
-        // Kartu akan terus bergerak sampai jaraknya ke target sudah sangat dekat
         while (Vector2.Distance(rectTransform.anchoredPosition, targetPosition) > 10f)
         {
             rectTransform.anchoredPosition = Vector2.MoveTowards(rectTransform.anchoredPosition, targetPosition, throwSpeed * Time.deltaTime);
@@ -198,35 +194,35 @@ public class CardSwipe : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
         {
             gameManager.ProcessDecision(toRight, activeCard);
         }
-
-        // 4. Kembalikan posisi fisik kartu ke tengah secara instan (diam-diam)
-        //rectTransform.anchoredPosition = defaultPosition;
-        //rectTransform.rotation = Quaternion.identity;
-
-        //isAnimating = false;
     }
 
     private void UpdateTelegraphing(float dragDistanceX)
     {
-        HideAllSignals();
+        HideAllSignals(); // Matikan dulu semuanya sebelum dicek ulang
 
-        if(activeCard == null)
+        if (activeCard == null)
         {
             return;
         }
 
-        if (dragDistanceX > telegraphThreshold) // KANAN
+        if (dragDistanceX > telegraphThreshold) // GESER KANAN
         {
             if (activeCard.efekKananBencana != 0) ActivateAndScaleSignal(sinyalBencana, activeCard.efekKananBencana);
             if (activeCard.efekKananEkosistem != 0) ActivateAndScaleSignal(sinyalEkosistem, activeCard.efekKananEkosistem);
+
+            // 👇 SOLUSI BUG: Baris ini sebelumnya terlewat di skrip Anda 👇
             if (activeCard.efekKananKeuangan != 0) ActivateAndScaleSignal(sinyalKeuangan, activeCard.efekKananKeuangan);
+
             if (activeCard.efekKananTeknologi != 0) ActivateAndScaleSignal(sinyalTeknologi, activeCard.efekKananTeknologi);
         }
-        else if (dragDistanceX < -telegraphThreshold) // KIRI
+        else if (dragDistanceX < -telegraphThreshold) // GESER KIRI
         {
             if (activeCard.efekKiriBencana != 0) ActivateAndScaleSignal(sinyalBencana, activeCard.efekKiriBencana);
             if (activeCard.efekKiriEkosistem != 0) ActivateAndScaleSignal(sinyalEkosistem, activeCard.efekKiriEkosistem);
+
+            // 👇 SOLUSI BUG: Baris ini juga terlewat di skrip Anda 👇
             if (activeCard.efekKiriKeuangan != 0) ActivateAndScaleSignal(sinyalKeuangan, activeCard.efekKiriKeuangan);
+
             if (activeCard.efekKiriTeknologi != 0) ActivateAndScaleSignal(sinyalTeknologi, activeCard.efekKiriTeknologi);
         }
     }
@@ -246,7 +242,6 @@ public class CardSwipe : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
         absValue = Mathf.Clamp(absValue, 0, maxEffectValue);
 
         // 4. Hitung skala menggunakan Lerp
-        // Jika absValue = 0, skala = minDotScale. Jika absValue = 15, skala = maxDotScale.
         float calculatedScale = Mathf.Lerp(minDotScale, maxDotScale, absValue / maxEffectValue);
 
         // 5. Terapkan skala ke komponen RectTransform UI
@@ -255,7 +250,7 @@ public class CardSwipe : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
 
     private void SetTextAlpha(TextMeshProUGUI textUI, float alpha)
     {
-        if(textUI != null)
+        if (textUI != null)
         {
             Color c = textUI.color;
             c.a = alpha;
@@ -279,7 +274,7 @@ public class CardSwipe : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
         HideAllSignals();
         foreach (GameObject signal in signalsToActivate)
         {
-            if(signal != null)
+            if (signal != null)
             {
                 signal.SetActive(true);
             }
